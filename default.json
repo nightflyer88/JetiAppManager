@@ -1,0 +1,148 @@
+{
+  "GPS to QR-Code": {
+    "author": "M. Lehmann",
+    "version": "V1.1",
+    "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/img/qpsQRcode.jpg",
+    "description": "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/README.md",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/gpsQRcode.lc",
+      "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/gpsQRcode/gpsQRcode.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/gpsQRcode"
+    ]
+  },
+  "Rx Battery Monitor": {
+    "author": "M. Lehmann",
+    "version": "V1.4",
+    "previewImg": "",
+    "description": "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/README.md",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/RxBattMon.lc",
+      "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/RxBattMon/RxBattMon.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/RxBattMon"
+    ]
+  },
+  "Artificial Horizon": {
+    "author": "JETI model",
+    "version": "V1.0",
+    "previewImg": "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Img/Artificial%20Horizon/Horizon6.png",
+    "description": "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Artificial%20Horizon/README.md",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Artificial%20Horizon/Horizon.lua"
+    ],
+    "destinationPath": [
+      "/Apps"
+    ]
+  },
+  "Automatic Trainer Switch": {
+    "author": "JETI model",
+    "version": "V1.0",
+    "previewImg": "",
+    "description": "",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Automatic%20Trainer%20Switch/TrainSw.lua"
+    ],
+    "destinationPath": [
+      "/Apps"
+    ]
+  },
+  "Battery Monitor": {
+    "author": "JETI model",
+    "version": "V1.2",
+    "previewImg": "",
+    "description": "",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Battery%20Monitor/BattMon.lua",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Battery%20Monitor/BattMon/locale.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/BattMon"
+    ]
+  },
+  "Battery Voltage": {
+    "author": "JETI model",
+    "version": "V1.1",
+    "previewImg": "",
+    "description": "",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Battery%20Voltage/BattVolt.lua",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Battery%20Voltage/BattVolt/locale.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/BattVolt"
+    ]
+  },
+  "Discharged Flightpack": {
+    "author": "JETI model",
+    "version": "V1.1",
+    "previewImg": "",
+    "description": "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Discharged%20Flightpack/Readme.md",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Discharged%20Flightpack/MainLow.lua",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Discharged%20Flightpack/MainLow/locale.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/MainLow"
+    ]
+  },
+  "Preflight Check": {
+    "author": "JETI model",
+    "version": "V1.2",
+    "previewImg": "",
+    "description": "",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight.lua",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight/data-cz.jsn",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight/data-de.jsn",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight/data-en.jsn",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight/data-es.jsn",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight/data-fr.jsn",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight/data-it.jsn",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight/locale.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/Preflight",
+      "/Apps/Preflight",
+      "/Apps/Preflight",
+      "/Apps/Preflight",
+      "/Apps/Preflight",
+      "/Apps/Preflight",
+      "/Apps/Preflight"
+    ]
+  },
+  "Src Dumper": {
+    "author": "JETI model",
+    "version": "V1.0",
+    "previewImg": "",
+    "description": "",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Src%20Dumper/Dumper.lua"
+    ],
+    "destinationPath": [
+      "/Apps"
+    ]
+  },
+  "Throttle Detent": {
+    "author": "JETI model",
+    "version": "V1.1",
+    "previewImg": "",
+    "description": "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Throttle%20Detent/Readme.md",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Throttle%20Detent/ThrotBmp.lua",
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Throttle%20Detent/ThrotBmp/locale.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/ThrotBmp"
+    ]
+  }
+}
