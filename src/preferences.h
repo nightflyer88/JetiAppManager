@@ -23,6 +23,10 @@ private:
     Ui::Preferences *ui;
 
     void accept();
+
+signals:
+    void updateSettings();
+
 };
 
 #endif // PREFERENCES_H

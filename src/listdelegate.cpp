@@ -1,9 +1,4 @@
 #include "listdelegate.h"
-/*
-ListDelegate::ListDelegate()
-{
-
-}*/
 
 ListDelegate::ListDelegate(QObject *parent)
     {

@@ -59,6 +59,9 @@ RESOURCES += \
 macx {
     # OS X: Specify icon resource to use
     ICON = jetiappmanager.ico
+
+    # OS X: Specify our developer information using a custom plist
+    QMAKE_INFO_PLIST = Info.plist
 }
 
 win32 {

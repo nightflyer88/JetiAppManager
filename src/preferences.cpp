@@ -7,10 +7,13 @@ Preferences::Preferences(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // read sources from settings
-    qRegisterMetaTypeStreamOperators<QList<QString>>("Data");
+    // read settings
     QSettings settings;
 
+    ui->checkBox_debugLog->setChecked(settings.value("show_debuglog",DEFAULT_SHOW_DEBUGLOG).toBool());
+
+    // read sources
+    qRegisterMetaTypeStreamOperators<QList<QString>>("Data");
     QList<QString> defUrl;
     defUrl << DEFAULT_SOURCE_URL;
     QList<QString> sourcelist = settings.value("sourceList",QVariant::fromValue(defUrl)).value<QList<QString>>();
@@ -32,15 +35,20 @@ void Preferences::accept()
 {
     QDialog::accept();
 
+    // save settings
+    QSettings settings;
+
+    settings.setValue("show_debuglog",ui->checkBox_debugLog->isChecked());
+
     // read sources from textedit
     QString plainTextEditContents = ui->sources->toPlainText();
     QStringList sourceFiles = plainTextEditContents.split("\n");
 
-    // save to settings
+    // write to settings
     qRegisterMetaTypeStreamOperators<QList<QString>>("Data");
     QList<QString> data {sourceFiles};
-
-    QSettings settings;
     settings.setValue("sourceList", QVariant::fromValue(data));
+
+    emit(updateSettings());
 
 }

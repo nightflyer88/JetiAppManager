@@ -1,15 +1,6 @@
 #ifndef LISTDELEGATE_H
 #define LISTDELEGATE_H
 
-/*
-class ListDelegate
-{
-public:
-    ListDelegate();
-};
-
-*/
-
 #include <QPainter>
 #include <QAbstractItemDelegate>
 
