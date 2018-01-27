@@ -3,7 +3,6 @@
         <file>index.html</file>
         <file>qwebchannel.js</file>
         <file>marked.min.js</file>
-        <file>default.md</file>
         <file>markdown.css</file>
     </qresource>
 </RCC>

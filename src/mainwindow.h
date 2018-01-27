@@ -41,12 +41,13 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void doDownload(const QUrl &url);
-    static bool isHttpRedirect(QNetworkReply *reply);
 
-    ~MainWindow();
-
-    void debugLogPrint(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+    enum{
+        sourceAppInfoFile=1,
+        descriptionfile,
+        previewIcon,
+        sourcefile
+    };
 
     enum transmitterTyp{
         unknownTransmitter=0,
@@ -59,31 +60,26 @@ public:
     };
     Q_ENUM(transmitterTyp)
 
+    void doDownload(const QUrl &url, QString appName, int fileType);
+
+    static bool isHttpRedirect(QNetworkReply *reply);
+
+    ~MainWindow();
+
+    void debugLogPrint(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+
 private:
     Ui::MainWindow *ui;
-
-    enum{
-        sourceAppInfoFile=1,
-        descriptionfile,
-        previewIcon,
-        sourcefile
-    };
-
-    struct appInfo{
-        QString appName;
-        int fileType;
-    };
-    QMap<QString, appInfo> urlFile;
-
 
     struct appData{
         QString author;
         QString version;
-        int minHW = unknownTransmitter;
-        float minSW = 0;
         QPixmap previewImg;
         QString description;
-        QStringList sourceFile;
+        float requiredFirmware = 0;
+        QStringList sourceFile;             //source files for all transmitters
+        QStringList sourceFile14_16;        //source files only for DC/DS 14,16
+        QStringList sourceFile24;           //source files only for DC/DS 24
         QStringList destinationPath;
     };
     QMap<QString, appData> luaApp;
@@ -92,7 +88,17 @@ private:
 
     QString getCurrentAppName();
 
+    int getCurrentTransmitter();
+
     bool isTransmitterValid(QString rootpath);
+
+    bool isTransmitterSupportLua(QString rootpath);
+
+    bool isTransmitterSupportApp(int hwTyp, QString appName);
+
+    bool isTransmitter14_16(int hwTyp);
+
+    bool isTransmitter24(int hwTyp);
 
     bool isAppInstalled(QString appName);
 
@@ -103,8 +109,8 @@ private:
     void updateAppStatus();
 
     struct transmitterData{
-        int typHW = unknownTransmitter;
-        float versionSW = 0;
+        int transmitterTyp = unknownTransmitter;
+        float firmwareVersion = 0;
         QString driveName;
         QString rootPath;
     };
@@ -115,12 +121,14 @@ private:
 
     QStringList getVolumes();
 
+    QStringList getAppSourceList(int hwTyp, appData app);
+
 
 public slots:
     void downloadFinished(QNetworkReply *reply);
 
 private slots:
-    void updateAppDescription();
+    void on_app_clicked();
 
     void on_actionPreferences_triggered();
 

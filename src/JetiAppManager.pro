@@ -50,7 +50,9 @@ DISTFILES += \
     resources/markdown.css \
     resources/index.html \
     resources/default.md \
-    jetiappmanager.ico
+    jetiappmanager.ico \
+    img/JetiAppManager.ico \
+    img/JetiAppManager.icns
 
 RESOURCES += \
     resources/markdowneditor.qrc
@@ -58,7 +60,7 @@ RESOURCES += \
 
 macx {
     # OS X: Specify icon resource to use
-    ICON = jetiappmanager.ico
+    ICON = img/JetiAppManager.icns
 
     # OS X: Specify our developer information using a custom plist
     QMAKE_INFO_PLIST = Info.plist
@@ -66,5 +68,5 @@ macx {
 
 win32 {
     # Windows: Specify the icon to use
-    RC_ICONS += jetiappmanager.ico
+    RC_ICONS += img/JetiAppManager.ico
 }

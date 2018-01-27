@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // setup app list
     connect(ui->appList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-        this, SLOT(updateAppDescription()));
+        this, SLOT(on_app_clicked()));
 
     // setup md-file viewer
     PreviewPage *page = new PreviewPage(this);
@@ -108,7 +108,7 @@ QStringList MainWindow::getVolumes()
 
     foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
         if (storage.isValid() && storage.isReady()) {
-            if(!storage.isReadOnly() && isTransmitterValid(storage.rootPath())){
+            if(!storage.isReadOnly() && isTransmitterValid(storage.rootPath()) && isTransmitterSupportLua(storage.rootPath())){
                 transmitterData readDevice;
                 readDevice.driveName = storage.displayName();
                 readDevice.rootPath = storage.rootPath();
@@ -116,12 +116,28 @@ QStringList MainWindow::getVolumes()
                 jetiTransmitter.append(readDevice);
 
                 volumes.append(storage.displayName());
-                qDebug("Jeti transmitter found: Type: %i Firmware: %.2f",readDevice.typHW, readDevice.versionSW);
+                qDebug("Jeti transmitter found: Type: %i Firmware: %.2f",readDevice.transmitterTyp, readDevice.firmwareVersion);
             }
         }
     }
 
     return volumes;
+}
+
+QStringList MainWindow::getAppSourceList(int hwTyp, MainWindow::appData app)
+{
+    QStringList sourcelist;
+
+    if(isTransmitter14_16(hwTyp) && !app.sourceFile14_16.isEmpty())
+        sourcelist = app.sourceFile14_16;
+
+    if(isTransmitter24(hwTyp) && !app.sourceFile24.isEmpty())
+        sourcelist = app.sourceFile24;
+
+    if(!app.sourceFile.isEmpty())
+        sourcelist = app.sourceFile;
+
+    return sourcelist;
 }
 
 bool MainWindow::isTransmitterValid(QString rootpath)
@@ -144,6 +160,64 @@ bool MainWindow::isTransmitterValid(QString rootpath)
     return false;
 }
 
+bool MainWindow::isTransmitterSupportLua(QString rootpath)
+{
+    QString destPath = TRANSMITTER_APPFOLDER;
+    #ifdef __APPLE__
+        // OSX path
+        destPath = rootpath + destPath;
+    #elif _WIN32
+        // WIN path
+        destPath = rootpath + destPath.right(destPath.size()-1);
+    #endif
+
+    QDir dir(destPath);
+    // check if app folder exists, if true transmitter support LUA
+    if (dir.exists()) {
+        return true;
+    }
+
+    return false;
+}
+
+bool MainWindow::isTransmitterSupportApp(int hwTyp, QString appName)
+{
+    if(luaApp.contains(appName)){
+        appData app = luaApp.value(appName);
+
+        if(jetiTransmitter[getCurrentTransmitter()].firmwareVersion < app.requiredFirmware)
+            return false;
+
+        if(isTransmitter14_16(hwTyp) && !app.sourceFile14_16.isEmpty())
+            return true;
+
+        if(isTransmitter24(hwTyp) && !app.sourceFile24.isEmpty())
+            return true;
+
+        if(!app.sourceFile.isEmpty())
+            return true;
+
+    }
+
+    return false;
+}
+
+bool MainWindow::isTransmitter14_16(int hwTyp)
+{
+    if(hwTyp==DC14 || hwTyp==DS14 || hwTyp==DC16 || hwTyp==DS16 )
+        return true;
+
+    return false;
+}
+
+bool MainWindow::isTransmitter24(int hwTyp)
+{
+    if(hwTyp==DC24 || hwTyp==DS24)
+        return true;
+
+    return false;
+}
+
 MainWindow::transmitterData MainWindow::getDevice(MainWindow::transmitterData device)
 {
     QFile configfile(device.rootPath + TRANSMITTER_CONFIGFILE);
@@ -160,10 +234,10 @@ MainWindow::transmitterData MainWindow::getDevice(MainWindow::transmitterData de
             QJsonObject value = config.object();
 
             if (value.contains("version") && value["version"].isString())
-                device.versionSW = value["version"].toString().toFloat();
+                device.firmwareVersion = value["version"].toString().toFloat();
 
             if (value.contains("hw") && value["hw"].isDouble())
-                device.typHW = value["hw"].toDouble();
+                device.transmitterTyp = value["hw"].toDouble();
 
         }
 
@@ -180,16 +254,18 @@ bool MainWindow::isAppInstalled(QString appName)
     if(luaApp.contains(appName)){
         appData app = luaApp.value(appName);
 
-        for(int i=0;i<app.sourceFile.size();i++){
-            QUrl url = QUrl::fromEncoded(app.sourceFile[i].toLocal8Bit());
+        QStringList sourceList = getAppSourceList(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, app);
+
+        for(int i=0;i<sourceList.size();i++){
+            QUrl url = QUrl::fromEncoded(sourceList[i].toLocal8Bit());
 
             QString destFile;
             #ifdef __APPLE__
                 // OSX path
-                destFile = jetiTransmitter[ui->jetiVolume->currentIndex()].rootPath + app.destinationPath[i] + "/" + url.fileName();
+                destFile = jetiTransmitter[getCurrentTransmitter()].rootPath + app.destinationPath[i] + "/" + url.fileName();
             #elif _WIN32
                 // WIN path
-                destFile = jetiTransmitter[ui->jetiVolume->currentIndex()].rootPath + app.destinationPath[i].right(app.destinationPath[i].size()-1) + "/" + url.fileName();
+                destFile = jetiTransmitter[getCurrentTransmitter()].rootPath + app.destinationPath[i].right(app.destinationPath[i].size()-1) + "/" + url.fileName();
             #endif
 
             QFileInfo check_file(destFile);
@@ -222,6 +298,9 @@ void MainWindow::updateAppList()
         item->setData(Qt::DisplayRole, list[i]);
         item->setData(Qt::UserRole + 1, app.version);
         item->setData(Qt::UserRole + 2, app.author);
+        item->setData(Qt::UserRole + 3, QString::number(app.requiredFirmware));
+        item->setData(Qt::UserRole + 4, !app.sourceFile14_16.isEmpty() || !app.sourceFile.isEmpty());
+        item->setData(Qt::UserRole + 5, !app.sourceFile24.isEmpty() || !app.sourceFile.isEmpty());
         item->setData(Qt::DecorationRole, app.previewImg);
         ui->appList->addItem(item);
 
@@ -245,10 +324,7 @@ void MainWindow::getSourceList()
     QString source;
     foreach( source, sourcelist ){
         QUrl url = QUrl::fromEncoded(source.toLocal8Bit());
-        appInfo appinfo;
-        appinfo.fileType = sourceAppInfoFile;
-        urlFile.insert(url.fileName(), appinfo);
-        doDownload(url);
+        doDownload(url,"",sourceAppInfoFile);
     }
 }
 
@@ -258,13 +334,18 @@ QString MainWindow::getCurrentAppName()
     return index.data(Qt::DisplayRole).toString();
 }
 
+int MainWindow::getCurrentTransmitter()
+{
+    return ui->jetiVolume->currentIndex();
+}
+
 void MainWindow::jetiVolume_changed(int index)
 {
 
     if(index >= 0){
         QMetaEnum metaEnum = QMetaEnum::fromType<MainWindow::transmitterTyp>();
-        ui->type->setText(metaEnum.valueToKey(jetiTransmitter[index].typHW));
-        ui->firmware->setText(QString::number(jetiTransmitter[index].versionSW));
+        ui->type->setText(metaEnum.valueToKey(jetiTransmitter[index].transmitterTyp));
+        ui->firmware->setText(QString::number(jetiTransmitter[index].firmwareVersion));
     }else{
         ui->type->setText("???");
         ui->firmware->setText("???");
@@ -274,7 +355,7 @@ void MainWindow::jetiVolume_changed(int index)
 
 }
 
-void MainWindow::updateAppDescription()
+void MainWindow::on_app_clicked()
 {
     // show app description
     QModelIndex index = ui->appList->currentIndex();
@@ -289,10 +370,7 @@ void MainWindow::updateAppDescription()
         QUrl url = QUrl::fromEncoded(app.description.toLocal8Bit());
         if(url.isValid()){
             ui->statusBar->showMessage("Lade Beschreibung...");
-            appInfo appinfo;
-            appinfo.fileType = descriptionfile;
-            urlFile.insert(url.fileName(), appinfo);
-            doDownload(url);
+            doDownload(url, itemText, descriptionfile);
         }else{
             appDescription.setText("keine App Beschreibung verfügbar");
         }
@@ -304,7 +382,7 @@ void MainWindow::updateAppDescription()
 void MainWindow::updateAppStatus()
 {
 
-    if(!jetiTransmitter.isEmpty()){
+    if(!jetiTransmitter.isEmpty() && isTransmitterSupportApp(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, getCurrentAppName())){
         ui->buttonInstall->setHidden(false);
 
         if(isAppInstalled(getCurrentAppName())){
@@ -326,12 +404,14 @@ void MainWindow::updateAppStatus()
     ui->statusBar->clearMessage();
 }
 
-void MainWindow::doDownload(const QUrl &url)
+void MainWindow::doDownload(const QUrl &url, QString appName, int fileType)
 {
     qDebug() << "download file:" << url.toString();
 
     QNetworkRequest request(url);
     QNetworkReply *reply = manager.get(request);
+    reply->setProperty("appName", QVariant(appName));
+    reply->setProperty("fileType", QVariant(fileType));
 
     currentDownloads.append(reply);
 }
@@ -355,98 +435,136 @@ void MainWindow::downloadFinished(QNetworkReply *reply)
         } else {
             QIODevice *data = reply;
 
-            if (urlFile.contains(url.fileName())){
+            QString luaAppName = reply->property("appName").toString();
+            int fileType = reply->property("fileType").toInt();
 
-                appInfo appinfo = urlFile.value(url.fileName());
+            if(fileType == sourceAppInfoFile){
 
-                if(appinfo.fileType == sourceAppInfoFile){
+                QString file = data->readAll();
 
-                    QString file = data->readAll();
+                // encode source file
+                QJsonDocument source = QJsonDocument::fromJson(file.toUtf8());
+                if(source.isObject()){
+                    QJsonObject appName = source.object();
 
-                    // encode source file
-                    QJsonDocument source = QJsonDocument::fromJson(file.toUtf8());
-                    if(source.isObject()){
-                        QJsonObject appName = source.object();
+                    foreach (QString name, appName.keys()) {
+                        QJsonObject value = appName[name].toObject();
+                        appData app;
 
-                        foreach (const QString& name, appName.keys()) {
-                            QJsonObject value = appName[name].toObject();
-                            appData app;
-
-                            if (value.contains("author") && value["author"].isString())
-                                app.author = value["author"].toString();
-
-                            if (value.contains("version") && value["version"].isString())
-                                app.version = value["version"].toString();
-
-                            if (value.contains("previewImg") && value["previewImg"].isString()){
-                                QUrl urlImg = QUrl::fromEncoded(value["previewImg"].toString().toLocal8Bit());
-                                if(urlImg.isValid()){
-                                    appInfo iconinfo;
-                                    iconinfo.appName = name;
-                                    iconinfo.fileType = previewIcon;
-                                    urlFile.insert(urlImg.fileName(), iconinfo);
-                                    doDownload(urlImg);
-                                }
+                        // check if same app exist
+                        if(luaApp.contains(name)){
+                            int appCount = 0;
+                            QString newName = name;
+                            while(luaApp.contains(newName)){
+                                appCount++;
+                                newName = name + " [" +QString::number(appCount) +"]";
                             }
-
-
-                            if (value.contains("description") && value["description"].isString())
-                                app.description = value["description"].toString();
-
-                            if (value.contains("sourceFile") && value["sourceFile"].isArray()){
-                                QJsonArray sourceFileArray = value["sourceFile"].toArray();
-
-                                foreach (const QJsonValue& sourcefile, sourceFileArray) {
-                                    app.sourceFile.append(sourcefile.toString());
-                                }
-                            }
-
-                            if (value.contains("destinationPath") && value["destinationPath"].isArray()){
-                                QJsonArray destinationPathArray = value["destinationPath"].toArray();
-
-                                foreach (const QJsonValue& destinationpath, destinationPathArray) {
-                                    app.destinationPath.append(destinationpath.toString());
-                                }
-                            }
-
-                            luaApp.insert(name, app);
-                            updateAppList();
+                            name = newName;
                         }
 
+                        // Author name
+                        if (value.contains("author") && value["author"].isString())
+                            app.author = value["author"].toString();
+
+                        // App version
+                        if (value.contains("version") && value["version"].isString())
+                            app.version = value["version"].toString();
+
+                        // Preview image
+                        if (value.contains("previewImg") && value["previewImg"].isString()){
+                            QUrl urlImg = QUrl::fromEncoded(value["previewImg"].toString().toLocal8Bit());
+                            if(urlImg.isValid()){
+                                doDownload(urlImg,name, previewIcon);
+                            }
+                        }
+
+                        // App description
+                        if (value.contains("description") && value["description"].isString())
+                            app.description = value["description"].toString();
+
+                        // required transmitter firmware
+                        if (value.contains("requiredFirmware") && value["requiredFirmware"].isDouble())
+                            app.requiredFirmware = value["requiredFirmware"].toDouble();
+
+                        // source files for all transmitters
+                        if (value.contains("sourceFile") && value["sourceFile"].isArray()){
+                            QJsonArray sourceFileArray = value["sourceFile"].toArray();
+
+                            foreach (const QJsonValue& sourcefile, sourceFileArray) {
+                                app.sourceFile.append(sourcefile.toString());
+                            }
+                        }
+
+                        // source files only for DC/DS 14,16 transmitters
+                        if (value.contains("sourceFile14_16") && value["sourceFile14_16"].isArray()){
+                            QJsonArray sourceFileArray = value["sourceFile14_16"].toArray();
+
+                            foreach (const QJsonValue& sourcefile, sourceFileArray) {
+                                app.sourceFile14_16.append(sourcefile.toString());
+                            }
+                        }
+
+                        // source files only for DC/DS 24 transmitter
+                        if (value.contains("sourceFile24") && value["sourceFile24"].isArray()){
+                            QJsonArray sourceFileArray = value["sourceFile24"].toArray();
+
+                            foreach (const QJsonValue& sourcefile, sourceFileArray) {
+                                app.sourceFile24.append(sourcefile.toString());
+                            }
+                        }
+
+                        // destination path
+                        if (value.contains("destinationPath") && value["destinationPath"].isArray()){
+                            QJsonArray destinationPathArray = value["destinationPath"].toArray();
+
+                            foreach (const QJsonValue& destinationpath, destinationPathArray) {
+                                app.destinationPath.append(destinationpath.toString());
+                            }
+                        }
+
+                        // add app to list
+                        luaApp.insert(name, app);
+                        updateAppList();
                     }
 
-                }else if(appinfo.fileType == descriptionfile){
+                }
 
-                    QString file = data->readAll();
+            }else if(fileType == descriptionfile){
 
-                    // set app description
-                    appDescription.setText(file);
+                // set app description
+                QString file = data->readAll();
+                appDescription.setText(file);
 
-                }else if(appinfo.fileType == previewIcon){
+            }else if(fileType == previewIcon){
 
-                    // load preview icon
-                    appData curApp = luaApp.value(appinfo.appName);
+                // load preview icon
+                if(luaApp.contains(luaAppName)){
+                    appData curApp = luaApp.value(luaAppName);
                     curApp.previewImg.loadFromData(data->readAll());
-                    luaApp[appinfo.appName] = curApp;
+                    luaApp[luaAppName] = curApp;
 
                     updateAppList();
+                }
 
-                }else if(appinfo.fileType == sourcefile){
+            }else if(fileType == sourcefile){
 
-                    // copy file to transmitter
-                    appData curApp = luaApp.value(appinfo.appName);
+                // copy file to transmitter
+                if(luaApp.contains(luaAppName)){
 
-                    for(int i=0; i<curApp.sourceFile.size();i++){
-                        QUrl sourceFileUrl = QUrl::fromEncoded(curApp.sourceFile[i].toLocal8Bit());
+                    appData curApp = luaApp.value(luaAppName);
+                    QStringList sourceList = getAppSourceList(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, curApp);
+
+                    for(int i=0; i < sourceList.size();i++){
+                        QUrl sourceFileUrl = QUrl::fromEncoded(sourceList[i].toLocal8Bit());
 
                         if(sourceFileUrl == url && !jetiTransmitter.isEmpty()){
                             QString destPath;
                             #ifdef __APPLE__
                                 // OSX path
-                                destPath = jetiTransmitter[ui->jetiVolume->currentIndex()].rootPath + curApp.destinationPath[i] + "/";
+                                destPath = jetiTransmitter[getCurrentTransmitter()].rootPath + curApp.destinationPath[i] + "/";
                             #elif _WIN32
                                 // WIN path
-                                destPath = jetiTransmitter[ui->jetiVolume->currentIndex()].rootPath + curApp.destinationPath[i].right(curApp.destinationPath[i].size()-1) + "/";
+                                destPath = jetiTransmitter[getCurrentTransmitter()].rootPath + curApp.destinationPath[i].right(curApp.destinationPath[i].size()-1) + "/";
                             #endif
 
                             qDebug() << "copy file to transmitter:" << destPath + url.fileName();
@@ -466,7 +584,6 @@ void MainWindow::downloadFinished(QNetworkReply *reply)
                         }
                     }
                 }
-
             }
         }
     }
@@ -511,21 +628,16 @@ void MainWindow::on_buttonInstall_clicked()
 
     QString currentApp = getCurrentAppName();
 
-    if(luaApp.contains(currentApp)){
+    if(luaApp.contains(currentApp) && isTransmitterSupportApp(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, currentApp)){
         ui->statusBar->showMessage("Installiere App: " + currentApp);
         qDebug() << "install app to transmitter:" << currentApp;
 
         appData app = luaApp.value(currentApp);
 
         // download sources
-        QString source;
-        foreach( source, app.sourceFile ){
+        foreach(QString source, getAppSourceList(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, app)){
             QUrl url = QUrl::fromEncoded(source.toLocal8Bit());
-            appInfo appinfo;
-            appinfo.appName = currentApp;
-            appinfo.fileType = sourcefile;
-            urlFile.insert(url.fileName(), appinfo);
-            doDownload(url);
+            doDownload(url, currentApp, sourcefile);
         }
     }
 }
@@ -539,17 +651,18 @@ void MainWindow::on_buttonUninstall_clicked()
         qDebug() << "uninstall app from transmitter:" << currentApp;
 
         appData app = luaApp.value(currentApp);
+        QStringList sourceList = getAppSourceList(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, app);
 
-        for(int i=0;i<app.sourceFile.size();i++){
-            QUrl url = QUrl::fromEncoded(app.sourceFile[i].toLocal8Bit());
+        for(int i=0;i<sourceList.size();i++){
+            QUrl url = QUrl::fromEncoded(sourceList[i].toLocal8Bit());
 
             QString destPath;
             #ifdef __APPLE__
                 // OSX path
-                destPath = jetiTransmitter[ui->jetiVolume->currentIndex()].rootPath + app.destinationPath[i];
+                destPath = jetiTransmitter[getCurrentTransmitter()].rootPath + app.destinationPath[i];
             #elif _WIN32
                 // WIN path
-                destPath = jetiTransmitter[ui->jetiVolume->currentIndex()].rootPath + app.destinationPath[i].right(app.destinationPath[i].size()-1);
+                destPath = jetiTransmitter[getCurrentTransmitter()].rootPath + app.destinationPath[i].right(app.destinationPath[i].size()-1);
             #endif
 
             QFile file(destPath+ "/" + url.fileName());
