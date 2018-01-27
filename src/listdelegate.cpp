@@ -62,8 +62,8 @@ ListDelegate::ListDelegate(QObject *parent)
         //Get app data
         QIcon ic = QIcon(qvariant_cast<QPixmap>(index.data(Qt::DecorationRole)));
         QString appName = index.data(Qt::DisplayRole).toString();
-        QString appVersion = "Version: " + index.data(Qt::UserRole + 1).toString();
-        QString appAuthor = "Author: " + index.data(Qt::UserRole + 2).toString();
+        QString appVersion = tr("Version: ") + index.data(Qt::UserRole + 1).toString();
+        QString appAuthor = tr("Author: ") + index.data(Qt::UserRole + 2).toString();
         QString requiredTransmitterFirmware = "V" + index.data(Qt::UserRole + 3).toString();
         bool support14_16 = index.data(Qt::UserRole + 4).toBool();
         bool support24 = index.data(Qt::UserRole + 5).toBool();
@@ -87,7 +87,7 @@ ListDelegate::ListDelegate(QObject *parent)
             painter->fillPath(path, QColor::fromRgb(128,222,6));
             painter->setPen(fontMarkedPen);
             painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
-            painter->drawText(r.left(), r.top(), 50, 16, Qt::AlignCenter|Qt::AlignHCenter, "all Tx", &r);
+            painter->drawText(r.left(), r.top(), 50, 16, Qt::AlignCenter|Qt::AlignHCenter, tr("all Tx"), &r);
             tagSpace += 60;
         }else{
             // support 14 transmitters

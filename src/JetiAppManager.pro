@@ -52,10 +52,14 @@ DISTFILES += \
     resources/default.md \
     jetiappmanager.ico \
     img/JetiAppManager.ico \
-    img/JetiAppManager.icns
+    img/JetiAppManager.icns \
+    language/JetiAppManager_en.qm
 
 RESOURCES += \
     resources/markdowneditor.qrc
+
+TRANSLATIONS += \
+    language/JetiAppManager_en.ts
 
 
 macx {

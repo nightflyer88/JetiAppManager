@@ -6,6 +6,9 @@
 #include <QDialog>
 #include <QDebug>
 #include <QSettings>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 
 namespace Ui {
 class Preferences;
@@ -23,6 +26,16 @@ private:
     Ui::Preferences *ui;
 
     void accept();
+
+    static QStringList listAvailableLanguages();
+
+    static QStringList listAvailableLanguagesFiles();
+
+    QString getSelectetLanguageFile();
+
+    int getSavedLanguageIndex();
+
+    QStringList languageFile;
 
 signals:
     void updateSettings();

@@ -65,8 +65,12 @@ MainWindow::MainWindow(QWidget *parent) :
     PreviewPage *page = new PreviewPage(this);
     ui->description->setPage(page);
 
-    appDescription.setText("## Jeti App Manager\n"
-                           "Wähle eine LUA-App aus der Liste");
+    appDescription.setText(tr("## Jeti App Manager\n"
+                              "- Sender am Computer anschliessen und Laufwerk wählen\n"
+                              "- App aus der Liste auswählen\n"
+                              "- Installieren drücken\n"
+                              "- Fertig\n"
+                              "\nViel Spass !"));
 
     QWebChannel *channel = new QWebChannel(this);
     channel->registerObject(QStringLiteral("content"), &appDescription);
@@ -310,7 +314,9 @@ void MainWindow::updateAppList()
 
 void MainWindow::getSourceList()
 {
-    ui->statusBar->showMessage("Lade App Informationen...");
+    ui->statusBar->showMessage(tr("Lade App Informationen..."));
+
+    luaApp.clear();
 
     // read sources from settings
     qRegisterMetaTypeStreamOperators<QList<QString>>("Data");
@@ -369,10 +375,10 @@ void MainWindow::on_app_clicked()
         // show description
         QUrl url = QUrl::fromEncoded(app.description.toLocal8Bit());
         if(url.isValid()){
-            ui->statusBar->showMessage("Lade Beschreibung...");
+            ui->statusBar->showMessage(tr("Lade Beschreibung..."));
             doDownload(url, itemText, descriptionfile);
         }else{
-            appDescription.setText("keine App Beschreibung verfügbar");
+            appDescription.setText(tr("keine App Beschreibung verfügbar"));
         }
 
         updateAppStatus();
@@ -387,12 +393,12 @@ void MainWindow::updateAppStatus()
 
         if(isAppInstalled(getCurrentAppName())){
             ui->buttonInstall->setStyleSheet("background-color: rgb(15, 128, 255)");
-            ui->buttonInstall->setText("Aktualisieren");
+            ui->buttonInstall->setText(tr("Aktualisieren"));
             ui->buttonUninstall->setStyleSheet("background-color: rgb(252, 1, 7)");
             ui->buttonUninstall->setHidden(false);
         }else{
             ui->buttonInstall->setStyleSheet("background-color: rgb(128, 255, 7)");
-            ui->buttonInstall->setText("Installieren");
+            ui->buttonInstall->setText(tr("Installieren"));
             ui->buttonUninstall->setHidden(true);
         }
 
@@ -629,7 +635,7 @@ void MainWindow::on_buttonInstall_clicked()
     QString currentApp = getCurrentAppName();
 
     if(luaApp.contains(currentApp) && isTransmitterSupportApp(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, currentApp)){
-        ui->statusBar->showMessage("Installiere App: " + currentApp);
+        ui->statusBar->showMessage(tr("Installiere App: ") + currentApp);
         qDebug() << "install app to transmitter:" << currentApp;
 
         appData app = luaApp.value(currentApp);
@@ -647,7 +653,7 @@ void MainWindow::on_buttonUninstall_clicked()
     QString currentApp = getCurrentAppName();
 
     if(luaApp.contains(currentApp)){
-        ui->statusBar->showMessage("Deinstalliere App: " + currentApp);
+        ui->statusBar->showMessage(tr("Deinstalliere App: ") + currentApp);
         qDebug() << "uninstall app from transmitter:" << currentApp;
 
         appData app = luaApp.value(currentApp);

@@ -4,5 +4,6 @@
         <file>qwebchannel.js</file>
         <file>marked.min.js</file>
         <file>markdown.css</file>
+        <file>../language/JetiAppManager_en.qm</file>
     </qresource>
 </RCC>

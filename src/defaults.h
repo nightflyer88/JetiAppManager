@@ -3,7 +3,7 @@
 
 #endif // DEFAULTS_H
 
-
+#define DEFAULT_LANGUAGE "de"
 
 #define DEFAULT_SHOW_DEBUGLOG   false
 

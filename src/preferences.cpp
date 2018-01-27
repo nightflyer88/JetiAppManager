@@ -24,6 +24,9 @@ Preferences::Preferences(QWidget *parent) :
         ui->sources->appendPlainText(source);
     }
 
+    ui->setLanguage->addItems(listAvailableLanguages());
+    ui->setLanguage->setCurrentIndex(getSavedLanguageIndex());
+
 }
 
 Preferences::~Preferences()
@@ -49,6 +52,85 @@ void Preferences::accept()
     QList<QString> data {sourceFiles};
     settings.setValue("sourceList", QVariant::fromValue(data));
 
+    // save language
+    settings.setValue("language", getSelectetLanguageFile());
+
     emit(updateSettings());
 
+}
+
+QStringList Preferences::listAvailableLanguages()
+{
+    QDir directory(":/language/");
+
+    QStringList qmfilter;
+    qmfilter << "*.qm";
+    QStringList filename = directory.entryList(qmfilter);
+
+    QStringList languagesList;
+    languagesList << QLocale::languageToString(QLocale(DEFAULT_LANGUAGE).language());
+
+    for (int i = 0; i < filename.size(); ++i){
+        // get locale extracted by filename
+        QString locale;
+        locale = filename[i]; // "JetiAppManager_en.qm"
+        locale.truncate(locale.lastIndexOf('.')); // "JetiAppManager_en"
+        locale.remove(0, QString::fromUtf8("JetiAppManager_").length()); // "en"
+
+        languagesList << QLocale::languageToString(QLocale(locale).language());
+
+    }
+
+    return languagesList;
+}
+
+QStringList Preferences::listAvailableLanguagesFiles()
+{
+    QDir directory(":/language/");
+
+    QStringList qmfilter;
+    qmfilter << "*.qm";
+    QStringList filename = directory.entryList(qmfilter);
+
+    QStringList languagesList;
+    languagesList << QLocale::languageToString(QLocale(DEFAULT_LANGUAGE).language());
+
+    for (int i = 0; i < filename.size(); ++i){
+        languagesList << filename[i]; // "JetiAppManager_en.qm"
+    }
+
+    return languagesList;
+}
+
+QString Preferences::getSelectetLanguageFile()
+{
+    QString selectedLanguage;
+
+    QStringList languagesList;
+    languagesList = listAvailableLanguagesFiles();
+
+    selectedLanguage = languagesList[ui->setLanguage->currentIndex()];
+
+    return selectedLanguage;
+}
+
+int Preferences::getSavedLanguageIndex()
+{
+    QSettings settings;
+
+    QString languageFile = settings.value("language", DEFAULT_LANGUAGE).toString();
+
+    QStringList languagesList;
+    languagesList = listAvailableLanguagesFiles();
+
+    int index = 0;
+
+    for (int i = 0; i < languagesList.size(); ++i){
+        if(languagesList[i] == languageFile){
+            index = i;
+            break;
+        }
+    }
+
+    return index;
 }
