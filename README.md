@@ -1,23 +1,46 @@
 # Jeti App Manager
 
-Der Jeti App Manager listet alle online verfügbaren LUA Apps übersichtilich auf, und dies können dann 
-einfach und schnell auf dem Jeti DC/DS Sender installiert werden. Einfach App auswählen, oben links die SD-Karte des Senders anwählen, 
+Der Jeti App Manager listet alle online verfügbaren LUA Apps übersichtilich auf, und können dann 
+einfach und schnell auf den Jeti DC/DS Sender installiert werden. Die App einfach und bequem auswählen, oben links die SD-Karte des Senders wählen, 
 und auf installieren drücken - Fertig !
 
 ![preview](https://github.com/nightflyer88/JetiAppManager/blob/master/images/JetiAppManager.png?raw=true)
 
-Der Jeti App Manager wird auf dem localen Computer installiert, danach werden in den Einstellungen die Quellen zu den LUA-Apps angegeben. 
-Der Jeti App Manager speichert keine Daten local, somit wird garantiert, dass die LUA-Apps immer auf dem neusten Stand sind.
+### Funktionsweise
+
+Der Jeti App Manager wird auf dem lokalen Computer (Mac oder Windows) installiert, die LUA-Apps werden durch eine Quelldatei eingebunden, so kann der Anwender selber bestimmen welche Apps aus welchen Quellen er haben möchte. 
+Die Apps sind jedoch nicht lokal gespeichert, sondern werden erst bei der installation auf den Sender aus dem Internet geladen. Dadurch wird garantiert, dass der Anwender immer auf dem neusten Software Stand ist. 
+
+Unter *Einstellungen* können weiter App-Quellen definiert werden. Es muss lediglich ein Link zu dieser *.json Quelldatei eingefügt werden (pro Zeile ein Link). Dieser Link zu der *.json Datei muss der App-Entwickler bereitstellen. Da die Quelldatei ebenfalls nicht lokal gespeichert ist, werden so immer die neusten App Versionen geladen, auch neue Apps von dem App-Entwickler werden automatisch angezeigt, ohne das man etwas aktuallisieren muss. 
+
+### Installation
+
+Neuste Version des Jeti App Manager für Mac oder Windows hier herunterladen: https://github.com/nightflyer88/JetiAppManager/releases
+
+#### Mac
+
+JetiAppManager.dmg herunterladen und öffnen, nun die JetiAppManager.app per Drag&Drop in den Programm Ordner ziehen.
+
+#### Windows
+
+JetiAppManager_setup.exe herunterladen, ausführen und den Anweisungen folgen. 
 
 ### Quelldatei
 
-Jeder App Entwickler der seine Apps anbieten möchte, muss ein Link zu einer Quelldatei seiner Apps bereitstellen. Die Quelldatei kann zB. 
-im App Repository auf GIT liegen oder sonst wo im Web. Der Link dazu muss einfach direkt sein und darf nicht umgeleitet sein.
+Jeder App Entwickler der seine Apps anbieten möchte, muss eine *.json Quelldatei erstellen. In der *.json Quelldatei sind dann alle nötigen Informationen zur App enthalten, unter anderem: benötigte Dateien, Ziel Pfade auf dem Sender, minimale Hard- und Softwareanforderungen des Senders, App-Beschreibung, Vorschaubild, usw.
 
-Die Datei muss im *.json Format sein. Mit diesem online [Tool](http://jsoneditoronline.org) ist die Quelldatei einfach und schnell erstellt.
+Die Quelldatei kann zB. im App Repository auf GIT liegen oder sonst wo im Web. Der Anwender braucht dann nur einen Link zu der *.json Datei. Dieser Link kann nun einfach unter *Einstellungen* auf einer neuen Zeile eingefügt werden. Der Link muss direkt zur Datei führen und darf nicht umgeleitet sein. 
 
-Die Quelldatei muss wie folgt struckturiert sein, und enthält dann alle informationen und links zur App:
+Beispiel Link:
+```
+https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json
+```
 
+Die Quell-Datei muss im *.json Format sein. Mit diesem online [Tool](http://jsoneditoronline.org) ist die Quelldatei einfach und schnell erstellt, und wird auch auf Formatierungsfehler geprüft.
+
+Die Quelldatei kann mehrere Apps enthalten und muss wie in den folgenden Beispielen struckturiert sein:
+
+Beispiel für mehrere Apps pro Quelldatei:
 ```
 {
   "GPS to QR-Code": {
@@ -49,35 +72,64 @@ Die Quelldatei muss wie folgt struckturiert sein, und enthält dann alle informa
 }
 ```
 
-Kurze Erklärung der einzelnen Einträge:
+Beispiel für eine App, die keine Hardware Anforderungen hat (läuft also auf jedem Sender, Senderfirmware wird auch nicht berücksichtigt):
 ```
 {
-  "GPS to QR-Code": {                     <-- Name der App
-    "author": "M. Lehmann",               <-- Name des Authors
-    "version": "V1.1",                    <-- aktuelle Version
-    "previewImg": "https://raw.git...",   <-- Link zum Vorschau Bild der App
-    "description": "https://raw.git...",  <-- Link zur Beschreibung (muss eine MarkDown *.md Datei sein)
-    "sourceFile": [                       <-- Liste der Dateien, die auf den Sender kopiert werden
-      "https://raw.git...",               <-- erste Datei
-      "https://raw.git..."                <-- zweite Datei
+  "GPS to QR-Code": {                                   <-- Name der App
+    "author": "M. Lehmann",                             <-- Name des Authors
+    "version": "V1.1",                                  <-- aktuelle Version
+    "previewImg": "https://raw.git.../qpsQRcode.jpg",   <-- Link zum Vorschau Bild der App, kann im *.jpeg, *.png oder *.bmp Format sein
+    "description": "https://raw.git.../README.md",      <-- Link zur Beschreibung, muss im MarkDown Format sein (*.md Datei, zB auf git die README.md)
+    "sourceFile": [                                     <-- Liste der Dateien, die auf den Sender kopiert werden
+      "https://raw.git.../gpsQRcode.lc",                <-- erste Datei
+      "https://raw.git.../gpsQRcode/gpsQRcode.jsn"      <-- zweite Datei
     ],
-    "destinationPath": [                  <-- Liste der Ziel Pfade (absolut) auf dem Sender
-      "/Apps",                            <-- erste Datei wird in diesen Ordner kopiert
-      "/Apps/gpsQRcode"                   <-- zweite Datei wird in diesen Ordner kopiert
+    "destinationPath": [                                <-- Liste der Ziel Pfade (absolut) auf dem Sender
+      "/Apps",                                          <-- erste Datei wird in diesen Ordner kopiert
+      "/Apps/gpsQRcode"                                 <-- zweite Datei wird in diesen Ordner kopiert
     ]
   }
 }
 ```
-Die Quelldatei kann mehrere Apps enthalten.
 
-Ist der Zielpfad auf dem Sender nicht verhanden, wird er erstellt.
+Beispiel für eine App, die die Senderfirmware 4.23 oder höher voraussetzt, und verschiedene App-Versionen für DC/DS14-16 oder DC/DS24 enthält.
+```
+{
+  "Battery Percentage": {                               <-- Name der App
+    "author": "RC-Thoughts",                            <-- Name des Authors
+    "version": "V2.4",                                  <-- aktuelle App-Version
+    "previewImg": "https://.../Jeti-Tools_small.png",   <-- Link zum Vorschau Bild der App, kann im *.jpeg, *.png oder *.bmp Format sein
+    "description": "https://.../README.md",             <-- Link zur Beschreibung, muss im MarkDown Format sein (*.md Datei, zB auf git die README.md)
+    "requiredFirmware": 4.23,                           <-- erforderliche minimale Senderfirmware
+    "sourceFile14_16": [                                <-- Liste der Dateien, die auf den Sender kopiert werden, wenn der Sendertyp DC/DS14-16 ist
+      "https://raw.git.../DCDS-1416/RCT-Batt.lc",
+      "https://raw.git.../DCDS-1416/Lang/RCT-Batt.jsn"
+    ],
+    "sourceFile24": [                                   <-- Liste der Dateien, die auf den Sender kopiert werden, wenn der Sendertyp DC/DS24 ist
+      "https://raw.git.../DCDS-24/RCT-Batt.lc",
+      "https://raw.git.../DCDS-24/Lang/RCT-Batt.jsn"
+    ],
+    "destinationPath": [                                <-- Liste der Ziel Pfade (absolut) auf dem Sender
+      "/Apps",
+      "/Apps/Lang"
+    ]
+  }
+}
+```
+
+
+Sollten die Zielpfade auf dem Sender nicht verhanden sein, werden diese erstellt. Bei der Deinstallation werden leere Ordner im /Apps Verzeichnis automatisch gelöscht.
+
+Sollte die App auf jeden Sendertyp installiert werden können, so kann die Liste der App-Dateien mit dem Key-Wort _**sourceFile**_ definiert werden. Läuft die App nur auf einer DC/DS24 so wird die Datei Liste mit dem Key-Wort _**sourceFile24**_ definiert. Für die Sendertypn DC/DS14-16 wird _**sourceFile14_16**_ definiert.
+
+Die minimale Senderfirmware wird mit dem Key-Wort _**requiredFirmware**_ und als Double-Zahl definiert.
 
 Alle Links zu den Dateien müssen direkt sein. Auch die Bilder die in der Beschreibung (*.md Datei) verlinkt sind müssen 
 direkt zur Datei führen und dürfen nicht weiter- oder umgeleitet sein.
 
 Beispiel Links:
 
-Dieser Link ist in Ordnung: https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Img/Artificial%20Horizon/Horizon6.png
+Dieser Link wird akzeptiert: https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Img/Artificial%20Horizon/Horizon6.png
 
 Dieser Link funktioniert nicht: https://github.com/nightflyer88/JetiAppManager/blob/master/images/JetiAppManager.png?raw=true
 
