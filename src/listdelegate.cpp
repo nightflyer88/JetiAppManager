@@ -83,47 +83,47 @@ ListDelegate::ListDelegate(QObject *parent)
         if(support14_16 && support24){
             r = option.rect.adjusted(tagSpace, 10, -10, -50);
             QPainterPath path;
-            path.addRoundedRect(r.left(), r.top(), 50, 16, 8, 8);
+            path.addRoundedRect(r.left(), r.top(), 60, 16, 8, 8);
             painter->fillPath(path, QColor::fromRgb(128,222,6));
             painter->setPen(fontMarkedPen);
             painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
-            painter->drawText(r.left(), r.top(), 50, 16, Qt::AlignCenter|Qt::AlignHCenter, tr("all Tx"), &r);
-            tagSpace += 60;
+            painter->drawText(r.left(), r.top(), 60, 16, Qt::AlignCenter|Qt::AlignHCenter, tr("all Tx"), &r);
+            tagSpace += 70;
         }else{
             // support 14 transmitters
             if(support14_16){
                 r = option.rect.adjusted(tagSpace, 10, -10, -50);
                 QPainterPath path;
-                path.addRoundedRect(r.left(), r.top(), 50, 16, 8, 8);
+                path.addRoundedRect(r.left(), r.top(), 60, 16, 8, 8);
                 painter->fillPath(path, QColor::fromRgb(255,147,0));
                 painter->setPen(fontMarkedPen);
                 painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
-                painter->drawText(r.left(), r.top(), 50, 16, Qt::AlignCenter|Qt::AlignHCenter, "DC/DS14", &r);
-                tagSpace += 60;
+                painter->drawText(r.left(), r.top(), 60, 16, Qt::AlignCenter|Qt::AlignHCenter, "DC/DS14", &r);
+                tagSpace += 70;
             }
 
             // support 16 transmitters
             if(support14_16){
                 r = option.rect.adjusted(tagSpace, 10, -10, -50);
                 QPainterPath path;
-                path.addRoundedRect(r.left(), r.top(), 50, 16, 8, 8);
+                path.addRoundedRect(r.left(), r.top(), 60, 16, 8, 8);
                 painter->fillPath(path, QColor::fromRgb(255,38,0));
                 painter->setPen(fontMarkedPen);
                 painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
-                painter->drawText(r.left(), r.top(), 50, 16, Qt::AlignCenter|Qt::AlignHCenter, "DC/DS16", &r);
-                tagSpace += 60;
+                painter->drawText(r.left(), r.top(), 60, 16, Qt::AlignCenter|Qt::AlignHCenter, "DC/DS16", &r);
+                tagSpace += 70;
             }
 
             // support 24 transmitters
             if(support24){
                 r = option.rect.adjusted(tagSpace, 10, -10, -50);
                 QPainterPath path;
-                path.addRoundedRect(r.left(), r.top(), 50, 16, 8, 8);
+                path.addRoundedRect(r.left(), r.top(), 60, 16, 8, 8);
                 painter->fillPath(path, QColor::fromRgb(148,23,81));
                 painter->setPen(fontMarkedPen);
                 painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
-                painter->drawText(r.left(), r.top(), 50, 16, Qt::AlignCenter|Qt::AlignHCenter, "DC/DS24", &r);
-                tagSpace += 60;
+                painter->drawText(r.left(), r.top(), 60, 16, Qt::AlignCenter|Qt::AlignHCenter, "DC/DS24", &r);
+                tagSpace += 70;
             }
         }
 
@@ -131,11 +131,11 @@ ListDelegate::ListDelegate(QObject *parent)
         if(requiredTransmitterFirmware != "V0"){
             r = option.rect.adjusted(tagSpace, 10, -10, -50);
             QPainterPath path;
-            path.addRoundedRect(r.left(), r.top(), 40, 16, 8, 8);
+            path.addRoundedRect(r.left(), r.top(), 50, 16, 8, 8);
             painter->fillPath(path, QColor::fromRgb(0,150,255));
             painter->setPen(fontMarkedPen);
             painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
-            painter->drawText(r.left(), r.top(), 40, 16, Qt::AlignCenter|Qt::AlignHCenter, requiredTransmitterFirmware, &r);
+            painter->drawText(r.left(), r.top(), 50, 16, Qt::AlignCenter|Qt::AlignHCenter, requiredTransmitterFirmware, &r);
         }
 
 
