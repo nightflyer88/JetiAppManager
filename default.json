@@ -4,7 +4,7 @@
     "version": "V1.1",
     "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/img/qpsQRcode.jpg",
     "description": "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/README.md",
-    "sourceFile": [
+    "sourceFile24": [
       "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/gpsQRcode.lc",
       "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/gpsQRcode/gpsQRcode.jsn"
     ],
