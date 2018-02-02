@@ -353,8 +353,8 @@ void MainWindow::jetiVolume_changed(int index)
         ui->type->setText(metaEnum.valueToKey(jetiTransmitter[index].transmitterTyp));
         ui->firmware->setText(QString::number(jetiTransmitter[index].firmwareVersion));
     }else{
-        ui->type->setText("???");
-        ui->firmware->setText("???");
+        ui->type->setText("-");
+        ui->firmware->setText("-");
     }
 
     updateAppStatus();

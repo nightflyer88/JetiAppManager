@@ -1,8 +1,12 @@
 #ifndef LISTDELEGATE_H
 #define LISTDELEGATE_H
 
+#include <QDebug>
+
 #include <QPainter>
 #include <QAbstractItemDelegate>
+
+#include "defaults.h"
 
 class ListDelegate : public QAbstractItemDelegate
 {

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Jeti App Manager V0.3</string>
+   <string>Jeti App Manager V0.4</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
@@ -36,11 +36,6 @@
       </item>
       <item>
        <widget class="QLabel" name="label_2">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
         <property name="text">
          <string>Sender Typ:</string>
         </property>
@@ -50,23 +45,17 @@
        <widget class="QLabel" name="type">
         <property name="font">
          <font>
-          <pointsize>14</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
         <property name="text">
-         <string>???</string>
+         <string>-</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_4">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
         <property name="text">
          <string>Firmware Version:</string>
         </property>
@@ -76,13 +65,12 @@
        <widget class="QLabel" name="firmware">
         <property name="font">
          <font>
-          <pointsize>14</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
         <property name="text">
-         <string>???</string>
+         <string>-</string>
         </property>
        </widget>
       </item>

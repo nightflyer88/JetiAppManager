@@ -86,7 +86,7 @@ ListDelegate::ListDelegate(QObject *parent)
             path.addRoundedRect(r.left(), r.top(), 60, 16, 8, 8);
             painter->fillPath(path, QColor::fromRgb(128,222,6));
             painter->setPen(fontMarkedPen);
-            painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
+            painter->setFont( QFont( "Lucida Grande", FONTSIZE_APP_TAG, QFont::Bold ) );
             painter->drawText(r.left(), r.top(), 60, 16, Qt::AlignCenter|Qt::AlignHCenter, tr("all Tx"), &r);
             tagSpace += 70;
         }else{
@@ -97,7 +97,7 @@ ListDelegate::ListDelegate(QObject *parent)
                 path.addRoundedRect(r.left(), r.top(), 60, 16, 8, 8);
                 painter->fillPath(path, QColor::fromRgb(255,147,0));
                 painter->setPen(fontMarkedPen);
-                painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
+                painter->setFont( QFont( "Lucida Grande", FONTSIZE_APP_TAG, QFont::Bold ) );
                 painter->drawText(r.left(), r.top(), 60, 16, Qt::AlignCenter|Qt::AlignHCenter, "DC/DS14", &r);
                 tagSpace += 70;
             }
@@ -109,7 +109,7 @@ ListDelegate::ListDelegate(QObject *parent)
                 path.addRoundedRect(r.left(), r.top(), 60, 16, 8, 8);
                 painter->fillPath(path, QColor::fromRgb(255,38,0));
                 painter->setPen(fontMarkedPen);
-                painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
+                painter->setFont( QFont( "Lucida Grande", FONTSIZE_APP_TAG, QFont::Bold ) );
                 painter->drawText(r.left(), r.top(), 60, 16, Qt::AlignCenter|Qt::AlignHCenter, "DC/DS16", &r);
                 tagSpace += 70;
             }
@@ -121,7 +121,7 @@ ListDelegate::ListDelegate(QObject *parent)
                 path.addRoundedRect(r.left(), r.top(), 60, 16, 8, 8);
                 painter->fillPath(path, QColor::fromRgb(148,23,81));
                 painter->setPen(fontMarkedPen);
-                painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
+                painter->setFont( QFont( "Lucida Grande", FONTSIZE_APP_TAG, QFont::Bold ) );
                 painter->drawText(r.left(), r.top(), 60, 16, Qt::AlignCenter|Qt::AlignHCenter, "DC/DS24", &r);
                 tagSpace += 70;
             }
@@ -134,7 +134,7 @@ ListDelegate::ListDelegate(QObject *parent)
             path.addRoundedRect(r.left(), r.top(), 50, 16, 8, 8);
             painter->fillPath(path, QColor::fromRgb(0,150,255));
             painter->setPen(fontMarkedPen);
-            painter->setFont( QFont( "Lucida Grande", 9, QFont::Bold ) );
+            painter->setFont( QFont( "Lucida Grande", FONTSIZE_APP_TAG, QFont::Bold ) );
             painter->drawText(r.left(), r.top(), 50, 16, Qt::AlignCenter|Qt::AlignHCenter, requiredTransmitterFirmware, &r);
         }
 
@@ -145,17 +145,17 @@ ListDelegate::ListDelegate(QObject *parent)
 
         //app name
         r = option.rect.adjusted(imageSpace, 0, -10, -47);
-        painter->setFont( QFont( "Lucida Grande", 16, QFont::Normal ) );
+        painter->setFont( QFont( "Lucida Grande", FONTSIZE_APP_DESCRIPTION, QFont::Normal ) );
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, appName, &r);
 
         //version
         r = option.rect.adjusted(imageSpace, 0, -10, -30);
-        painter->setFont( QFont( "Lucida Grande", 10, QFont::Normal ) );
+        painter->setFont( QFont( "Lucida Grande", FONTSIZE_APP_VERSION, QFont::Normal ) );
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, appVersion, &r);
 
         //author
         r = option.rect.adjusted(imageSpace, 0, -10, -15);
-        painter->setFont( QFont( "Lucida Grande", 10, QFont::Normal ) );
+        painter->setFont( QFont( "Lucida Grande", FONTSIZE_APP_AUTHOR, QFont::Normal ) );
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, appAuthor, &r);
     }
 

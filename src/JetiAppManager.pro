@@ -67,7 +67,7 @@ macx {
     ICON = img/JetiAppManager.icns
 
     # OS X: Specify our developer information using a custom plist
-    QMAKE_INFO_PLIST = Info.plist
+    #QMAKE_INFO_PLIST = Info.plist
 }
 
 win32 {
