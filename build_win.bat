@@ -10,25 +10,16 @@ rem ##
 SET QTDIR=C:\Qt\5.10.0\msvc2015
 
 
-
 SET QMAKE=%QTDIR%\bin\qmake.exe
-
-
-
 SET MAKE_DIR=%QTDIR%\..\..\Tools\QtCreator\bin
-
-
-
 SET MAKE=%MAKE_DIR%\jom.exe
 
 
-
+SET NSISDIR=C:\Program Files (x86)\NSIS
 SET BASEDIR=%~dp0
 
 
-
 SET SOURCEDIR=%BASEDIR%src
-
 
 
 SET BUILDDIR=%BASEDIR%build_win
@@ -36,8 +27,8 @@ SET BUILDDIR=%BASEDIR%build_win
 
 
 
-
 SET EXEDIR=%BASEDIR%build_win\release
+SET SETUPDIR=%BASEDIR%build_win\setup
 
 
 
@@ -46,6 +37,8 @@ rem ## make build dir
 mkdir %BUILDDIR%
 
 
+mkdir %SETUPDIR%
+
 
 
 rem ## build JetiAppManager.exe
@@ -53,27 +46,31 @@ rem ## build JetiAppManager.exe
 pushd %BUILDDIR%
 
 
-
 echo "%~dp0"
-
 %QMAKE% %SOURCEDIR%\JetiAppManager.pro -spec win32-msvc
-
-
-
-%MAKE% 
-
+%MAKE%
 popd
 
 
-rem ## copy qt-frameworks and libs to build dir
 
-%QTDIR%\bin\windeployqt --qmldir %QTDIR%\qml %EXEDIR%
+rem ## copy qt-frameworks and libs to setup dir
+
+copy %EXEDIR%\JetiAppManager.exe %SETUPDIR%
+%QTDIR%\bin\windeployqt --qmldir %QTDIR%\qml %SETUPDIR%
 
 
-rem ## copy openssl lib to build dir
 
-copy %BASEDIR%lib\libeay32.dll %EXEDIR%
-copy %BASEDIR%lib\ssleay32.dll %EXEDIR%
+rem ## copy openssl lib to setup dir
+
+copy %BASEDIR%lib\*.* %SETUPDIR%
+
+
+
+rem ## make installer
+
+pushd %NSISDIR%
+makensis.exe /V4 %BASEDIR%JetiAppManager.nsi
+popd
 
 
 
