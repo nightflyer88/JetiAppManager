@@ -62,6 +62,7 @@ ListDelegate::ListDelegate(QObject *parent)
         //Get app data
         QIcon ic = QIcon(qvariant_cast<QPixmap>(index.data(Qt::DecorationRole)));
         QString appName = index.data(Qt::DisplayRole).toString();
+        //QString appName = index.data(Qt::UserRole).toString();
         QString appVersion = tr("Version: ") + index.data(Qt::UserRole + 1).toString();
         QString appAuthor = tr("Author: ") + index.data(Qt::UserRole + 2).toString();
         QString requiredTransmitterFirmware = "V" + index.data(Qt::UserRole + 3).toString();
@@ -70,11 +71,10 @@ ListDelegate::ListDelegate(QObject *parent)
 
 
         //ICON
-        int imageSpace = 10;
+        int imageSpace = 100;
         if (!ic.isNull()) {
             r = option.rect.adjusted(5, 10, -10, -10);
             ic.paint(painter, r.left(), r.top(), 80, 80, Qt::AlignVCenter|Qt::AlignLeft);
-            imageSpace = 100;
         }
 
         int tagSpace = imageSpace;

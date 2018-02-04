@@ -25,6 +25,7 @@
 #include <QWebChannel>
 
 #include <QListWidgetItem>
+#include <QRegExp>
 
 #include <stdio.h>
 
@@ -72,6 +73,8 @@ private:
     Ui::MainWindow *ui;
 
     struct appData{
+        bool doInstall = false;
+        bool doUninstall = false;
         QString author;
         QString version;
         QPixmap previewImg;
@@ -85,6 +88,8 @@ private:
     QMap<QString, appData> luaApp;
 
     Document appDescription;
+
+    bool error = false;
 
     QString getCurrentAppName();
 
@@ -102,7 +107,7 @@ private:
 
     bool isAppInstalled(QString appName);
 
-    void updateAppList();
+    void updateAppList(QRegExp regExp = QRegExp("", Qt::CaseInsensitive, QRegExp::Wildcard));
 
     void getSourceList();
 
@@ -142,6 +147,7 @@ private slots:
 
     void checkMountedVolumes();
 
+    void on_searchText_textChanged(const QString &arg1);
 };
 
 #endif // MAINWINDOW_H

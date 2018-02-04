@@ -285,13 +285,26 @@ bool MainWindow::isAppInstalled(QString appName)
 }
 
 
-void MainWindow::updateAppList()
+void MainWindow::updateAppList(QRegExp regExp)
 {
     // print apps in list
     ui->appList->clear();
 
     QStringList list = luaApp.keys();
+
+    for(int i = 0; i < list.size(); i++){
+        appData app = luaApp.value(list[i]);
+        QString newitem = list[i] + "*@*" + app.author;
+        list.replaceInStrings(list[i],newitem);
+    }
+
+    list = list.filter(regExp);
     std::sort(list.begin(), list.end());
+
+    foreach(QString item, list){
+        QStringList newlist = item.split("*@*");
+        list.replaceInStrings(item,newlist[0]);
+    }
 
     ui->appList->setItemDelegate(new ListDelegate(ui->appList));
 
@@ -300,6 +313,7 @@ void MainWindow::updateAppList()
 
         QListWidgetItem *item = new QListWidgetItem();
         item->setData(Qt::DisplayRole, list[i]);
+        //item->setData(Qt::UserRole, list[i]);
         item->setData(Qt::UserRole + 1, app.version);
         item->setData(Qt::UserRole + 2, app.author);
         item->setData(Qt::UserRole + 3, QString::number(app.requiredFirmware));
@@ -309,6 +323,8 @@ void MainWindow::updateAppList()
         ui->appList->addItem(item);
 
     }
+
+    ui->appCount->setText(QString::number(list.size()));
 
 }
 
@@ -338,6 +354,7 @@ QString MainWindow::getCurrentAppName()
 {
     QModelIndex index = ui->appList->currentIndex();
     return index.data(Qt::DisplayRole).toString();
+    //return index.data(Qt::UserRole).toString();
 }
 
 int MainWindow::getCurrentTransmitter()
@@ -364,8 +381,7 @@ void MainWindow::jetiVolume_changed(int index)
 void MainWindow::on_app_clicked()
 {
     // show app description
-    QModelIndex index = ui->appList->currentIndex();
-    QString itemText = index.data(Qt::DisplayRole).toString();
+    QString itemText = getCurrentAppName();
 
     appData app;
 
@@ -433,6 +449,9 @@ bool MainWindow::isHttpRedirect(QNetworkReply *reply)
 void MainWindow::downloadFinished(QNetworkReply *reply)
 {
     QUrl url = reply->url();
+    QString luaAppName = reply->property("appName").toString();
+    int fileType = reply->property("fileType").toInt();
+
     if (reply->error()) {
         qDebug("ERROR: Download of %s failed: %s",url.toEncoded().constData(),qPrintable(reply->errorString()));
     } else {
@@ -440,9 +459,6 @@ void MainWindow::downloadFinished(QNetworkReply *reply)
             qDebug("ERROR: Request was redirected");
         } else {
             QIODevice *data = reply;
-
-            QString luaAppName = reply->property("appName").toString();
-            int fileType = reply->property("fileType").toInt();
 
             if(fileType == sourceAppInfoFile){
 
@@ -533,6 +549,8 @@ void MainWindow::downloadFinished(QNetworkReply *reply)
                         updateAppList();
                     }
 
+                }else{
+                    qDebug("ERROR: json syntax error in file: %s",url.toEncoded().constData());
                 }
 
             }else if(fileType == descriptionfile){
@@ -584,6 +602,7 @@ void MainWindow::downloadFinished(QNetworkReply *reply)
                                 file.write(data->readAll());
                             }else{
                                 qDebug() << "ERROR: Write file" << destPath + url.fileName();
+                                error = true;
                             }
 
                             break;
@@ -598,6 +617,20 @@ void MainWindow::downloadFinished(QNetworkReply *reply)
 
     if(currentDownloads.isEmpty()){
         updateAppStatus();
+
+        if(luaApp.contains(luaAppName)){
+            appData curApp = luaApp.value(luaAppName);
+            if(curApp.doInstall){
+                if(error){
+                    qDebug() << "ERROR: App install failed";
+                }else{
+                    qDebug() << "app successfully installed";
+                }
+
+                curApp.doInstall = false;
+                error = false;
+            }
+        }
     }
 }
 
@@ -634,11 +667,16 @@ void MainWindow::on_buttonInstall_clicked()
 
     QString currentApp = getCurrentAppName();
 
+    error = false;
+
     if(luaApp.contains(currentApp) && isTransmitterSupportApp(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, currentApp)){
         ui->statusBar->showMessage(tr("Installiere App: ") + currentApp);
         qDebug() << "install app to transmitter:" << currentApp;
 
         appData app = luaApp.value(currentApp);
+        app.doInstall = true;
+
+        luaApp[currentApp] = app;
 
         // download sources
         foreach(QString source, getAppSourceList(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, app)){
@@ -657,41 +695,68 @@ void MainWindow::on_buttonUninstall_clicked()
         qDebug() << "uninstall app from transmitter:" << currentApp;
 
         appData app = luaApp.value(currentApp);
+        app.doUninstall = true;
+        error = false;
+
         QStringList sourceList = getAppSourceList(jetiTransmitter[getCurrentTransmitter()].transmitterTyp, app);
 
         for(int i=0;i<sourceList.size();i++){
             QUrl url = QUrl::fromEncoded(sourceList[i].toLocal8Bit());
 
             QString destPath;
+            QString appFolderPath = TRANSMITTER_APPFOLDER;
             #ifdef __APPLE__
                 // OSX path
                 destPath = jetiTransmitter[getCurrentTransmitter()].rootPath + app.destinationPath[i];
+                appFolderPath = jetiTransmitter[getCurrentTransmitter()].rootPath + appFolderPath;
             #elif _WIN32
                 // WIN path
                 destPath = jetiTransmitter[getCurrentTransmitter()].rootPath + app.destinationPath[i].right(app.destinationPath[i].size()-1);
+                appFolderPath = jetiTransmitter[getCurrentTransmitter()].rootPath + appFolderPath.right(appFolderPath.size()-1);
             #endif
 
             QFile file(destPath+ "/" + url.fileName());
             QDir dir(destPath);
+            QDir appDir(appFolderPath);
             // check if file exists and if yes: Is it really a file and no directory?
             if (file.exists()) {
                 if(file.remove()){
                     qDebug() << "remove file from transmitter:" << file.fileName();
                 }else{
                     qDebug() << "ERROR: failed to remove file:" << file.fileName();
+                    error = true;
                 }
             }
-            if(dir.isEmpty() && TRANSMITTER_APPFOLDER != app.destinationPath[i]){
-                if(dir.rmdir(destPath)){
+
+            while(dir.isEmpty() && (dir != appDir)){
+                if(dir.rmdir(dir.absolutePath())){
                     qDebug() << "remove folder from transmitter:" << dir.absolutePath();
                 }else{
                     qDebug() << "ERROR: failed to remove folder:" << dir.absolutePath();
+                    error = true;
+                    break;
                 }
+                dir.cdUp();
             }
+
+
         }
+
+        updateAppStatus();
+
+        if(app.doUninstall){
+            if(error){
+                qDebug() << "ERROR: App uninstall failed";
+            }else{
+                qDebug() << "app successfully uninstalled";
+            }
+
+            app.doUninstall = false;
+            error = false;
+        }
+
     }
 
-    updateAppStatus();
 }
 
 void MainWindow::on_actionPreferences_triggered()
@@ -705,4 +770,10 @@ void MainWindow::on_actionPreferences_triggered()
 }
 
 
+void MainWindow::on_searchText_textChanged(const QString &arg1)
+{
+    QRegExp regExp(arg1, Qt::CaseInsensitive, QRegExp::Wildcard);
 
+    updateAppList(regExp);
+
+}
