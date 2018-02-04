@@ -4,72 +4,92 @@
 <context>
     <name>ListDelegate</name>
     <message>
-        <location filename="../listdelegate.cpp" line="65"/>
+        <location filename="../listdelegate.cpp" line="66"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../listdelegate.cpp" line="66"/>
+        <location filename="../listdelegate.cpp" line="67"/>
         <source>Author: </source>
         <translation></translation>
     </message>
     <message>
         <location filename="../listdelegate.cpp" line="90"/>
-        <source>alle Tx</source>
+        <source>all Tx</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="14"/>
-        <source>Jeti App Manager V0.3</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="23"/>
         <source>Laufwerk:</source>
         <translation>Drive:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="45"/>
+        <location filename="../mainwindow.ui" line="40"/>
         <source>Sender Typ:</source>
         <translation>Transmitter type:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="59"/>
-        <location filename="../mainwindow.ui" line="85"/>
-        <source>???</source>
-        <translation></translation>
+        <location filename="../mainwindow.ui" line="14"/>
+        <source>Jeti App Manager</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="71"/>
+        <location filename="../mainwindow.ui" line="53"/>
+        <location filename="../mainwindow.ui" line="73"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="60"/>
         <source>Firmware Version:</source>
         <translation>Firmware version:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="105"/>
+        <location filename="../mainwindow.ui" line="93"/>
         <source>Deinstallieren</source>
         <translation>Uninstall</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="118"/>
-        <location filename="../mainwindow.cpp" line="399"/>
+        <location filename="../mainwindow.ui" line="106"/>
+        <location filename="../mainwindow.cpp" line="418"/>
         <source>Installieren</source>
         <translation>Install</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="206"/>
+        <location filename="../mainwindow.ui" line="128"/>
+        <source>Suchen:</source>
+        <translation>Search:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="152"/>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="159"/>
+        <source>Apps gefunden</source>
+        <translation>Apps found</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="239"/>
         <source>Datei</source>
         <translation>File</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="215"/>
+        <location filename="../mainwindow.ui" line="245"/>
+        <location filename="../mainwindow.ui" line="260"/>
+        <source>Hilfe</source>
+        <translation>Help</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="255"/>
         <source>Einstellungen</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="68"/>
         <source>## Jeti App Manager
 - Sender am Computer anschliessen und Laufwerk wählen
 - App aus der Liste auswählen
@@ -77,7 +97,7 @@
 - Fertig
 
 Viel Spass !</source>
-        <translation>## Jeti App Manager
+        <translation type="vanished">## Jeti App Manager
 - Connect the transmitter to the computer and select the drive
 - Select app from the list
 - Click Install
@@ -85,34 +105,50 @@ Viel Spass !</source>
 Enjoy !</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="317"/>
+        <location filename="../mainwindow.cpp" line="71"/>
+        <source>- Sender am Computer anschliessen und Laufwerk wählen
+- App aus der Liste auswählen
+- Installieren drücken
+- Fertig</source>
+        <translation>- Connect the transmitter to the computer and select the drive
+- Select app from the list
+- Click Install
+- Finished</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="334"/>
         <source>Lade App Informationen...</source>
         <translation>Loading App Information...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="376"/>
+        <location filename="../mainwindow.cpp" line="395"/>
         <source>Lade Beschreibung...</source>
         <translation>Loading Description ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="379"/>
+        <location filename="../mainwindow.cpp" line="398"/>
         <source>keine App Beschreibung verfügbar</source>
         <translation>no app description available</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="394"/>
+        <location filename="../mainwindow.cpp" line="413"/>
         <source>Aktualisieren</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="636"/>
+        <location filename="../mainwindow.cpp" line="674"/>
         <source>Installiere App: </source>
         <translation>Install app: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="654"/>
+        <location filename="../mainwindow.cpp" line="695"/>
         <source>Deinstalliere App: </source>
         <translation>Uninstall app: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="785"/>
+        <source>Lade Hilfe...</source>
+        <translation>Load help...</translation>
     </message>
 </context>
 <context>

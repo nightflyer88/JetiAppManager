@@ -65,12 +65,13 @@ MainWindow::MainWindow(QWidget *parent) :
     PreviewPage *page = new PreviewPage(this);
     ui->description->setPage(page);
 
-    appDescription.setText(tr("## Jeti App Manager\n"
-                              "- Sender am Computer anschliessen und Laufwerk wählen\n"
+    appDescription.setText("## Jeti App Manager "
+                           JETIAPPMANAGER_VERSION
+                           "\n(c) 2018 M.Lehmann\n"+
+                           tr("- Sender am Computer anschliessen und Laufwerk wählen\n"
                               "- App aus der Liste auswählen\n"
                               "- Installieren drücken\n"
-                              "- Fertig\n"
-                              "\nViel Spass !"));
+                              "- Fertig"));
 
     QWebChannel *channel = new QWebChannel(this);
     channel->registerObject(QStringLiteral("content"), &appDescription);
@@ -346,7 +347,7 @@ void MainWindow::getSourceList()
     QString source;
     foreach( source, sourcelist ){
         QUrl url = QUrl::fromEncoded(source.toLocal8Bit());
-        doDownload(url,"",sourceAppInfoFile);
+        doDownload(url,"",appInfoFile);
     }
 }
 
@@ -460,7 +461,7 @@ void MainWindow::downloadFinished(QNetworkReply *reply)
         } else {
             QIODevice *data = reply;
 
-            if(fileType == sourceAppInfoFile){
+            if(fileType == appInfoFile){
 
                 QString file = data->readAll();
 
@@ -776,4 +777,11 @@ void MainWindow::on_searchText_textChanged(const QString &arg1)
 
     updateAppList(regExp);
 
+}
+
+void MainWindow::on_actionHelp_triggered()
+{
+    QUrl url = QUrl::fromEncoded(HELP_FILE_URL);
+    ui->statusBar->showMessage(tr("Lade Hilfe..."));
+    doDownload(url, "help", descriptionfile);
 }

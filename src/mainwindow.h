@@ -44,7 +44,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
 
     enum{
-        sourceAppInfoFile=1,
+        appInfoFile=1,
         descriptionfile,
         previewIcon,
         sourcefile
@@ -148,6 +148,8 @@ private slots:
     void checkMountedVolumes();
 
     void on_searchText_textChanged(const QString &arg1);
+
+    void on_actionHelp_triggered();
 };
 
 #endif // MAINWINDOW_H

@@ -3,16 +3,26 @@
 
 #endif // DEFAULTS_H
 
-#define DEFAULT_LANGUAGE "de"
+// Version
+#define JETIAPPMANAGER_VERSION  "V0.4"
 
+
+// Default settings
+#define DEFAULT_LANGUAGE        "de"
 #define DEFAULT_SHOW_DEBUGLOG   false
-
 #define DEFAULT_SOURCE_URL      "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json"
 
+
+// Transmitter paths
 #define TRANSMITTER_CONFIGFILE  "/Config/Config.jsn"
 #define TRANSMITTER_APPFOLDER   "/Apps"
 
 
+// Help file
+#define HELP_FILE_URL           "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/README.md"
+
+
+// Font sizes
 #ifdef __APPLE__
     #define FONTSIZE_APP_DESCRIPTION    16
     #define FONTSIZE_APP_VERSION        10
