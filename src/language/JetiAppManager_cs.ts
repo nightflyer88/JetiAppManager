@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.1" language="cs_CZ">
 <context>
     <name>ListDelegate</name>
     <message>
         <location filename="../listdelegate.cpp" line="66"/>
         <source>Version: </source>
-        <translation></translation>
+        <translation>verze: </translation>
     </message>
     <message>
         <location filename="../listdelegate.cpp" line="67"/>
         <source>Author: </source>
-        <translation></translation>
+        <translation>autor: </translation>
     </message>
     <message>
         <location filename="../listdelegate.cpp" line="90"/>
@@ -29,7 +29,7 @@
     <message>
         <location filename="../mainwindow.ui" line="40"/>
         <source>Sender Typ:</source>
-        <translation>Transmitter type:</translation>
+        <translation>Typ vysílače:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="14"/>
@@ -45,23 +45,23 @@
     <message>
         <location filename="../mainwindow.ui" line="60"/>
         <source>Firmware Version:</source>
-        <translation>Firmware version:</translation>
+        <translation>Verze firmwaru:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="93"/>
         <source>Deinstallieren</source>
-        <translation>Uninstall</translation>
+        <translation>nainstalovat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="106"/>
         <location filename="../mainwindow.cpp" line="418"/>
         <source>Installieren</source>
-        <translation>Install</translation>
+        <translation>instalovat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="128"/>
         <source>Suchen:</source>
-        <translation>Search:</translation>
+        <translation>Hledat:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
@@ -71,23 +71,23 @@
     <message>
         <location filename="../mainwindow.ui" line="159"/>
         <source>Apps gefunden</source>
-        <translation>Apps found</translation>
+        <translation>Byly nalezeny aplikace</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="239"/>
         <source>Datei</source>
-        <translation>File</translation>
+        <translation>Soubor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="245"/>
         <location filename="../mainwindow.ui" line="260"/>
         <source>Hilfe</source>
-        <translation>Help</translation>
+        <translation>Pomoci</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="255"/>
         <source>Einstellungen</source>
-        <translation>Settings</translation>
+        <translation>Nastavení</translation>
     </message>
     <message>
         <source>## Jeti App Manager
@@ -110,45 +110,45 @@ Enjoy !</translation>
 - App aus der Liste auswählen
 - Installieren drücken
 - Fertig</source>
-        <translation>- Connect the transmitter to the computer and select the drive
-- Select app from the list
-- Click Install
-- Finished</translation>
+        <translation>- Připojte vysílač k počítači a vyberte jednotku
+- Vyberte aplikaci ze seznamu
+- Stiskněte tlačítko Instalace
+- Hotovo</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="334"/>
         <source>Lade App Informationen...</source>
-        <translation>Loading App Information...</translation>
+        <translation>Načítání informací o aplikaci ...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="395"/>
         <source>Lade Beschreibung...</source>
-        <translation>Loading Description ...</translation>
+        <translation>Načítá se popis ...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="398"/>
         <source>keine App Beschreibung verfügbar</source>
-        <translation>no app description available</translation>
+        <translation>žádný popis aplikace není k dispozici</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="413"/>
         <source>Aktualisieren</source>
-        <translation>Update</translation>
+        <translation>aktualizovat</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="674"/>
         <source>Installiere App: </source>
-        <translation>Install app: </translation>
+        <translation>Instalace aplikace: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="695"/>
         <source>Deinstalliere App: </source>
-        <translation>Uninstall app: </translation>
+        <translation>Odinstalovat aplikaci: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="785"/>
         <source>Lade Hilfe...</source>
-        <translation>Load help...</translation>
+        <translation>Načítání nápovědy ...</translation>
     </message>
 </context>
 <context>
@@ -156,22 +156,22 @@ Enjoy !</translation>
     <message>
         <location filename="../preferences.ui" line="20"/>
         <source>Einstellungen</source>
-        <translation>Settings</translation>
+        <translation>Nastavení</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="35"/>
         <source>Sprache</source>
-        <translation>Language</translation>
+        <translation>Jazyk</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="68"/>
         <source>Quellen (pro Zeile eine URL):</source>
-        <translation>Sources (one URL per line):</translation>
+        <translation>Zdroje (jedna adresa URL na jeden řádek):</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="28"/>
         <source>Debug Log anzeigen</source>
-        <translation>Show debug log</translation>
+        <translation>Zobrazit protokol ladění</translation>
     </message>
 </context>
 </TS>

@@ -5,5 +5,10 @@
         <file>marked.min.js</file>
         <file>markdown.css</file>
         <file>../language/JetiAppManager_en.qm</file>
+        <file>../language/JetiAppManager_it.qm</file>
+        <file>../language/JetiAppManager_cs.qm</file>
+        <file>../language/JetiAppManager_es.qm</file>
+        <file>../language/JetiAppManager_fr.qm</file>
+        <file>../language/JetiAppManager_pt.qm</file>
     </qresource>
 </RCC>

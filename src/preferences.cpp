@@ -76,7 +76,6 @@ QStringList Preferences::listAvailableLanguages()
         locale = filename[i]; // "JetiAppManager_en.qm"
         locale.truncate(locale.lastIndexOf('.')); // "JetiAppManager_en"
         locale.remove(0, QString::fromUtf8("JetiAppManager_").length()); // "en"
-
         languagesList << QLocale::languageToString(QLocale(locale).language());
 
     }

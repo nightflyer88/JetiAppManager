@@ -355,7 +355,6 @@ QString MainWindow::getCurrentAppName()
 {
     QModelIndex index = ui->appList->currentIndex();
     return index.data(Qt::DisplayRole).toString();
-    //return index.data(Qt::UserRole).toString();
 }
 
 int MainWindow::getCurrentTransmitter()
@@ -637,10 +636,10 @@ void MainWindow::downloadFinished(QNetworkReply *reply)
 
 void MainWindow::loadSettings()
 {
-    qDebug()<<"read user settings";
-    qDebug()<<"get app information...";
-
     QSettings settings;
+
+    qDebug()<<"read user settings from file:" << settings.fileName();
+    qDebug()<<"get app sources...";
 
     // hide debugLog
     if(settings.value("show_debuglog",DEFAULT_SHOW_DEBUGLOG).toBool()){

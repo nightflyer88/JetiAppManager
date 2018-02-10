@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.1" language="it_IT">
 <context>
     <name>ListDelegate</name>
     <message>
         <location filename="../listdelegate.cpp" line="66"/>
         <source>Version: </source>
-        <translation></translation>
+        <translation>versione: </translation>
     </message>
     <message>
         <location filename="../listdelegate.cpp" line="67"/>
         <source>Author: </source>
-        <translation></translation>
+        <translation>autore: </translation>
     </message>
     <message>
         <location filename="../listdelegate.cpp" line="90"/>
@@ -22,19 +22,19 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../mainwindow.ui" line="14"/>
+        <source>Jeti App Manager</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="23"/>
         <source>Laufwerk:</source>
-        <translation>Drive:</translation>
+        <translation>guidare:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="40"/>
         <source>Sender Typ:</source>
-        <translation>Transmitter type:</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="14"/>
-        <source>Jeti App Manager</source>
-        <translation></translation>
+        <translation>Tipo di trasmettitore:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="53"/>
@@ -45,23 +45,23 @@
     <message>
         <location filename="../mainwindow.ui" line="60"/>
         <source>Firmware Version:</source>
-        <translation>Firmware version:</translation>
+        <translation>Versione del firmware:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="93"/>
         <source>Deinstallieren</source>
-        <translation>Uninstall</translation>
+        <translation>disinstallazione</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="106"/>
         <location filename="../mainwindow.cpp" line="418"/>
         <source>Installieren</source>
-        <translation>Install</translation>
+        <translation>installare</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="128"/>
         <source>Suchen:</source>
-        <translation>Search:</translation>
+        <translation>Ricerca:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
@@ -71,38 +71,23 @@
     <message>
         <location filename="../mainwindow.ui" line="159"/>
         <source>Apps gefunden</source>
-        <translation>Apps found</translation>
+        <translation>App trovate</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="239"/>
         <source>Datei</source>
-        <translation>File</translation>
+        <translation>file</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="245"/>
         <location filename="../mainwindow.ui" line="260"/>
         <source>Hilfe</source>
-        <translation>Help</translation>
+        <translation>Aiuto</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="255"/>
         <source>Einstellungen</source>
-        <translation>Settings</translation>
-    </message>
-    <message>
-        <source>## Jeti App Manager
-- Sender am Computer anschliessen und Laufwerk wählen
-- App aus der Liste auswählen
-- Installieren drücken
-- Fertig
-
-Viel Spass !</source>
-        <translation type="vanished">## Jeti App Manager
-- Connect the transmitter to the computer and select the drive
-- Select app from the list
-- Click Install
-
-Enjoy !</translation>
+        <translation>impostazioni</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="71"/>
@@ -110,45 +95,45 @@ Enjoy !</translation>
 - App aus der Liste auswählen
 - Installieren drücken
 - Fertig</source>
-        <translation>- Connect the transmitter to the computer and select the drive
-- Select app from the list
-- Click Install
-- Finished</translation>
+        <translation>- Collegare il trasmettitore al computer e selezionare l&apos;unità
+- Seleziona l&apos;app dall&apos;elenco
+- Premere Installa
+- Fatto</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="334"/>
         <source>Lade App Informationen...</source>
-        <translation>Loading App Information...</translation>
+        <translation>Caricamento delle informazioni sull&apos;app...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="395"/>
         <source>Lade Beschreibung...</source>
-        <translation>Loading Description ...</translation>
+        <translation>Caricamento descrizione...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="398"/>
         <source>keine App Beschreibung verfügbar</source>
-        <translation>no app description available</translation>
+        <translation>nessuna descrizione dell&apos;app disponibile</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="413"/>
         <source>Aktualisieren</source>
-        <translation>Update</translation>
+        <translation>aggiornare</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="674"/>
         <source>Installiere App: </source>
-        <translation>Install app: </translation>
+        <translation>Installa app: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="695"/>
         <source>Deinstalliere App: </source>
-        <translation>Uninstall app: </translation>
+        <translation>Disinstalla app: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="785"/>
         <source>Lade Hilfe...</source>
-        <translation>Load help...</translation>
+        <translation>Caricamento della guida...</translation>
     </message>
 </context>
 <context>
@@ -156,22 +141,22 @@ Enjoy !</translation>
     <message>
         <location filename="../preferences.ui" line="20"/>
         <source>Einstellungen</source>
-        <translation>Settings</translation>
-    </message>
-    <message>
-        <location filename="../preferences.ui" line="35"/>
-        <source>Sprache</source>
-        <translation>Language</translation>
-    </message>
-    <message>
-        <location filename="../preferences.ui" line="68"/>
-        <source>Quellen (pro Zeile eine URL):</source>
-        <translation>Sources (one URL per line):</translation>
+        <translation>impostazioni</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="28"/>
         <source>Debug Log anzeigen</source>
-        <translation>Show debug log</translation>
+        <translation>Mostra registro di debug</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="35"/>
+        <source>Sprache</source>
+        <translation>lingua</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="68"/>
+        <source>Quellen (pro Zeile eine URL):</source>
+        <translation>Fonti (un URL per riga):</translation>
     </message>
 </context>
 </TS>

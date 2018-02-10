@@ -28,18 +28,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    previewpage.cpp \
     document.cpp \
+    listdelegate.cpp \
+    mainwindow.cpp \
     preferences.cpp \
-    listdelegate.cpp
+    previewpage.cpp
 
 HEADERS  += mainwindow.h \
-    previewpage.h \
     document.h \
-    preferences.h \
     defaults.h \
-    listdelegate.h
+    listdelegate.h \
+    preferences.h \
+    previewpage.h
 
 FORMS    += mainwindow.ui \
     preferences.ui
@@ -50,16 +50,20 @@ DISTFILES += \
     resources/markdown.css \
     resources/index.html \
     resources/default.md \
-    jetiappmanager.ico \
     img/JetiAppManager.ico \
-    img/JetiAppManager.icns \
-    language/JetiAppManager_en.qm
+    img/JetiAppManager.icns
 
 RESOURCES += \
     resources/markdowneditor.qrc
 
 TRANSLATIONS += \
-    language/JetiAppManager_en.ts
+    language/JetiAppManager_cs.ts \
+    language/JetiAppManager_en.ts \
+    language/JetiAppManager_es.ts \
+    language/JetiAppManager_fr.ts \
+    language/JetiAppManager_it.ts \
+    language/JetiAppManager_pt.ts
+
 
 
 macx {
