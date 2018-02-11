@@ -32,14 +32,16 @@ SOURCES += main.cpp\
     listdelegate.cpp \
     mainwindow.cpp \
     preferences.cpp \
-    previewpage.cpp
+    previewpage.cpp \
+    appmanager.cpp
 
 HEADERS  += mainwindow.h \
     document.h \
     defaults.h \
     listdelegate.h \
     preferences.h \
-    previewpage.h
+    previewpage.h \
+    appmanager.h
 
 FORMS    += mainwindow.ui \
     preferences.ui
