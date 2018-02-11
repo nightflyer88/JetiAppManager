@@ -20,6 +20,7 @@
 
 // Help file
 #define HELP_FILE_URL           "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/README.md"
+#define HELP_FILE_URL_DE        "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/README_de.md"
 
 
 // Font sizes

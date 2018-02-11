@@ -309,7 +309,15 @@ void MainWindow::on_searchText_textChanged(const QString &arg1)
 
 void MainWindow::on_actionHelp_triggered()
 {
-    QUrl url = QUrl::fromEncoded(HELP_FILE_URL);
     ui->statusBar->showMessage(tr("Lade Hilfe..."));
+
+    QUrl url;
+
+    if(appManager->getLocalLanguage()=="de"){
+        url = QUrl::fromEncoded(HELP_FILE_URL_DE);
+    }else{
+        url = QUrl::fromEncoded(HELP_FILE_URL);
+    }
+
     appManager->doDownload(url, "help", appManager->descriptionfile);
 }

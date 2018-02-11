@@ -103,6 +103,8 @@ public:
 
     QStringList getAppSourceList(Transmitter transmitter, App app);
 
+    QString getLocalLanguage();
+
 
 private:
 
@@ -118,16 +120,16 @@ private:
 
     App encodeAppValues(QJsonObject value, App app);
 
-    QString getLocalLanguage();
-
 
 public slots:
 
     virtual void close();
 
+
 private slots:
 
     void downloadFinished(QNetworkReply *reply);
+
 
 signals:
 
