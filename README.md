@@ -36,7 +36,7 @@ Beispiel Link:
 https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json
 ```
 
-Die Quell-Datei muss im *.json Format sein. Mit diesem online [Tool](http://jsoneditoronline.org) ist die Quelldatei einfach und schnell erstellt, und wird auch auf Formatierungsfehler geprüft.
+Die Quell-Datei muss im *.json Format sein. Mit diesem online [Tool](http://jsoneditoronline.org) ist die Quelldatei einfach und schnell erstellt, und wird auch auf Syntaxfehler geprüft.
 
 Die Quelldatei kann mehrere Apps enthalten und muss wie in den folgenden Beispielen struckturiert sein:
 
@@ -71,8 +71,10 @@ Beispiel für mehrere Apps pro Quelldatei:
   }
 }
 ```
+Die einzelnen Apps werden in der JSON Datei als Object{} definiert. Der Object-Name entspricht dem App Name. In einer JSON Datei gibt es keine Begrenzung der maximal anzahl Apps.
 
-Beispiel für eine App, die keine Hardware Anforderungen hat (läuft also auf jedem Sender, Senderfirmware wird auch nicht berücksichtigt):
+
+Beispiel für eine App die auf jedem Sender läuft:
 ```
 {
   "GPS to QR-Code": {                                   <-- Name der App
@@ -91,6 +93,7 @@ Beispiel für eine App, die keine Hardware Anforderungen hat (läuft also auf je
   }
 }
 ```
+Sollte die App auf jeden Sendertyp installiert werden können, so kann die Liste der App-Dateien mit dem Key-Wort _**sourceFile**_ definiert werden. Sind die Zielpfade auf dem Sender nicht verhanden, werden diese erstellt. Bei der Deinstallation werden leere Ordner im /Apps Verzeichnis automatisch gelöscht.
 
 Beispiel für eine App, die die Senderfirmware 4.23 oder höher voraussetzt, und verschiedene App-Versionen für DC/DS14-16 oder DC/DS24 enthält.
 ```
@@ -116,13 +119,53 @@ Beispiel für eine App, die die Senderfirmware 4.23 oder höher voraussetzt, und
   }
 }
 ```
+Sollte die App nur auf einer DC/DS24 installiert werden können, so wird die Dateiliste mit dem Key-Wort _**sourceFile24**_ definiert. Für die Sendertypn DC/DS14-16 wird _**sourceFile14_16**_ definiert. Die minimale Senderfirmware wird mit dem Key-Wort _**requiredFirmware**_ und als Double-Zahl definiert.
 
+Beispiel für eine mehrsprachige App:
+```
+{
+  "LUA App deutsch": {                                  <-- standart Name der App (hier in Deutsch)
+    "author": "M. Lehmann",                             # Standart informationen der App
+    "version": "V1.1",                                  # ist keine andere Sprache vorhanden werden dies informationen verwendet
+    "previewImg": "https://raw.git.../qpsQRcode.jpg",
+    "description": "https://raw.git.../README.md",
+    "requiredFirmware": 4.23,
+    "sourceFile24": [
+      "https://raw.git.../gpsQRcode.lc"
+    ],
+    "destinationPath": [
+      "/Apps"
+    ],
+    "en": {                                             # ist diese Sprache (Englisch) eingestellt werden die App Informationen überschrieben
+      "appName": "LUA App english",                     <-- neuer Name der App in Englisch
+      "description": "https://raw.git.../README_en.md"  <-- andere Datei für die Beschreibung 
+    },
+    "cz": {
+      "appName": "LUA App český",
+      "description": "https://raw.git.../README_cz.md",
+      "previewImg": "https://raw.git.../cz.jpg"         <-- anderes Vorschaubild für Tschechisch
+    },
+    "it": {
+      "description": "https://raw.git.../README_it.md"  <-- hier wird nur eine andere Beschreibung definiert, App Name bleibt gleich
+    }
+  }
+}
+```
 
-Sollten die Zielpfade auf dem Sender nicht verhanden sein, werden diese erstellt. Bei der Deinstallation werden leere Ordner im /Apps Verzeichnis automatisch gelöscht.
+Durch die Sprachobjekte können die Standart App Informationen durch andere überschrieben werden. Es kann zB. ein anderer App Name, eine andere (übersetzte) Beschreibung, usw.. definiert werden. Es ist möglich, alle Standart Informationen zu überschreiben, auch die _**sourceFile**_ und _**destinationPath**_ Objekte.
 
-Sollte die App auf jeden Sendertyp installiert werden können, so kann die Liste der App-Dateien mit dem Key-Wort _**sourceFile**_ definiert werden. Läuft die App nur auf einer DC/DS24 so wird die Datei Liste mit dem Key-Wort _**sourceFile24**_ definiert. Für die Sendertypn DC/DS14-16 wird _**sourceFile14_16**_ definiert.
+Momentan werden die folgenden Sprachen unterstützt:
 
-Die minimale Senderfirmware wird mit dem Key-Wort _**requiredFirmware**_ und als Double-Zahl definiert.
+| Sprache      | Kürzel |
+|--------------|--------|
+| Deutsch      | de     |
+| Englisch     | en     |
+| Tschechisch  | cz     |
+| Französisch  | fr     |
+| Italienisch  | it     |
+| Spanisch     | es     |
+| Portugisisch | pt     |
+
 
 Alle Links zu den Dateien müssen direkt sein. Auch die Bilder die in der Beschreibung (*.md Datei) verlinkt sind müssen 
 direkt zur Datei führen und dürfen nicht weiter- oder umgeleitet sein.
