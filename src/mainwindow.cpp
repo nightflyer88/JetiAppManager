@@ -140,8 +140,8 @@ void MainWindow::reloadAppList(QRegExp regExp)
 
         QListWidgetItem *item = new QListWidgetItem();
         item->setData(Qt::DisplayRole, list[i]);
-        item->setData(Qt::UserRole + 1, app.version);
-        item->setData(Qt::UserRole + 2, app.author);
+        item->setData(Qt::UserRole + 1, tr("Version: ") + app.version);
+        item->setData(Qt::UserRole + 2, tr("Author: ") + app.author);
         item->setData(Qt::UserRole + 3, QString::number(app.requiredFirmware));
         item->setData(Qt::UserRole + 4, !app.sourceFile14_16.isEmpty() || !app.sourceFile.isEmpty());
         item->setData(Qt::UserRole + 5, !app.sourceFile24.isEmpty() || !app.sourceFile.isEmpty());

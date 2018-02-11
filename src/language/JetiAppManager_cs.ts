@@ -2,21 +2,22 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="cs_CZ">
 <context>
+    <name>AppManager</name>
+    <message>
+        <location filename="../appmanager.cpp" line="39"/>
+        <source>keine App Beschreibung verfügbar</source>
+        <translation>žádný popis aplikace není k dispozici</translation>
+    </message>
+</context>
+<context>
     <name>ListDelegate</name>
     <message>
-        <location filename="../listdelegate.cpp" line="66"/>
         <source>Version: </source>
-        <translation>verze: </translation>
+        <translation type="vanished">verze: </translation>
     </message>
     <message>
-        <location filename="../listdelegate.cpp" line="67"/>
         <source>Author: </source>
-        <translation>autor: </translation>
-    </message>
-    <message>
-        <location filename="../listdelegate.cpp" line="90"/>
-        <source>all Tx</source>
-        <translation></translation>
+        <translation type="vanished">autor: </translation>
     </message>
 </context>
 <context>
@@ -48,44 +49,44 @@
         <translation>Verze firmwaru:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="93"/>
+        <location filename="../mainwindow.ui" line="105"/>
         <source>Deinstallieren</source>
         <translation>nainstalovat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="106"/>
-        <location filename="../mainwindow.cpp" line="418"/>
+        <location filename="../mainwindow.ui" line="130"/>
+        <location filename="../mainwindow.cpp" line="227"/>
         <source>Installieren</source>
         <translation>instalovat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="128"/>
+        <location filename="../mainwindow.ui" line="152"/>
         <source>Suchen:</source>
         <translation>Hledat:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="152"/>
+        <location filename="../mainwindow.ui" line="176"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="159"/>
+        <location filename="../mainwindow.ui" line="183"/>
         <source>Apps gefunden</source>
         <translation>Byly nalezeny aplikace</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="239"/>
+        <location filename="../mainwindow.ui" line="263"/>
         <source>Datei</source>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="245"/>
-        <location filename="../mainwindow.ui" line="260"/>
+        <location filename="../mainwindow.ui" line="269"/>
+        <location filename="../mainwindow.ui" line="284"/>
         <source>Hilfe</source>
         <translation>Pomoci</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="255"/>
+        <location filename="../mainwindow.ui" line="279"/>
         <source>Einstellungen</source>
         <translation>Nastavení</translation>
     </message>
@@ -105,7 +106,7 @@ Viel Spass !</source>
 Enjoy !</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="71"/>
+        <location filename="../mainwindow.cpp" line="79"/>
         <source>- Sender am Computer anschliessen und Laufwerk wählen
 - App aus der Liste auswählen
 - Installieren drücken
@@ -116,37 +117,51 @@ Enjoy !</translation>
 - Hotovo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="334"/>
+        <location filename="../mainwindow.cpp" line="143"/>
+        <source>Version: </source>
+        <translation>verze: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="144"/>
+        <source>Author: </source>
+        <translation>autor: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="166"/>
         <source>Lade App Informationen...</source>
         <translation>Načítání informací o aplikaci ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="395"/>
+        <location filename="../mainwindow.cpp" line="209"/>
         <source>Lade Beschreibung...</source>
         <translation>Načítá se popis ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="398"/>
         <source>keine App Beschreibung verfügbar</source>
-        <translation>žádný popis aplikace není k dispozici</translation>
+        <translation type="vanished">žádný popis aplikace není k dispozici</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="413"/>
+        <location filename="../mainwindow.cpp" line="222"/>
         <source>Aktualisieren</source>
         <translation>aktualizovat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="674"/>
+        <location filename="../mainwindow.cpp" line="270"/>
         <source>Installiere App: </source>
         <translation>Instalace aplikace: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="695"/>
+        <location filename="../mainwindow.cpp" line="280"/>
         <source>Deinstalliere App: </source>
         <translation>Odinstalovat aplikaci: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="785"/>
+        <location filename="../mainwindow.cpp" line="284"/>
+        <source> konnte nicht deinstalliert werden !</source>
+        <translation> nelze odinstalovat!</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="313"/>
         <source>Lade Hilfe...</source>
         <translation>Načítání nápovědy ...</translation>
     </message>

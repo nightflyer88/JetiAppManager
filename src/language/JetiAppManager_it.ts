@@ -2,21 +2,22 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="it_IT">
 <context>
+    <name>AppManager</name>
+    <message>
+        <location filename="../appmanager.cpp" line="39"/>
+        <source>keine App Beschreibung verfügbar</source>
+        <translation>nessuna descrizione dell&apos;app disponibile</translation>
+    </message>
+</context>
+<context>
     <name>ListDelegate</name>
     <message>
-        <location filename="../listdelegate.cpp" line="66"/>
         <source>Version: </source>
-        <translation>versione: </translation>
+        <translation type="vanished">versione: </translation>
     </message>
     <message>
-        <location filename="../listdelegate.cpp" line="67"/>
         <source>Author: </source>
-        <translation>autore: </translation>
-    </message>
-    <message>
-        <location filename="../listdelegate.cpp" line="90"/>
-        <source>all Tx</source>
-        <translation></translation>
+        <translation type="vanished">autore: </translation>
     </message>
 </context>
 <context>
@@ -48,49 +49,49 @@
         <translation>Versione del firmware:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="93"/>
+        <location filename="../mainwindow.ui" line="105"/>
         <source>Deinstallieren</source>
         <translation>disinstallazione</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="106"/>
-        <location filename="../mainwindow.cpp" line="418"/>
+        <location filename="../mainwindow.ui" line="130"/>
+        <location filename="../mainwindow.cpp" line="227"/>
         <source>Installieren</source>
         <translation>installare</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="128"/>
+        <location filename="../mainwindow.ui" line="152"/>
         <source>Suchen:</source>
         <translation>Ricerca:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="152"/>
+        <location filename="../mainwindow.ui" line="176"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="159"/>
+        <location filename="../mainwindow.ui" line="183"/>
         <source>Apps gefunden</source>
         <translation>App trovate</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="239"/>
+        <location filename="../mainwindow.ui" line="263"/>
         <source>Datei</source>
         <translation>file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="245"/>
-        <location filename="../mainwindow.ui" line="260"/>
+        <location filename="../mainwindow.ui" line="269"/>
+        <location filename="../mainwindow.ui" line="284"/>
         <source>Hilfe</source>
         <translation>Aiuto</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="255"/>
+        <location filename="../mainwindow.ui" line="279"/>
         <source>Einstellungen</source>
         <translation>impostazioni</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="71"/>
+        <location filename="../mainwindow.cpp" line="79"/>
         <source>- Sender am Computer anschliessen und Laufwerk wählen
 - App aus der Liste auswählen
 - Installieren drücken
@@ -101,37 +102,51 @@
 - Fatto</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="334"/>
+        <location filename="../mainwindow.cpp" line="143"/>
+        <source>Version: </source>
+        <translation>versione: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="144"/>
+        <source>Author: </source>
+        <translation>autore: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="166"/>
         <source>Lade App Informationen...</source>
         <translation>Caricamento delle informazioni sull&apos;app...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="395"/>
+        <location filename="../mainwindow.cpp" line="209"/>
         <source>Lade Beschreibung...</source>
         <translation>Caricamento descrizione...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="398"/>
         <source>keine App Beschreibung verfügbar</source>
-        <translation>nessuna descrizione dell&apos;app disponibile</translation>
+        <translation type="vanished">nessuna descrizione dell&apos;app disponibile</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="413"/>
+        <location filename="../mainwindow.cpp" line="222"/>
         <source>Aktualisieren</source>
         <translation>aggiornare</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="674"/>
+        <location filename="../mainwindow.cpp" line="270"/>
         <source>Installiere App: </source>
         <translation>Installa app: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="695"/>
+        <location filename="../mainwindow.cpp" line="280"/>
         <source>Deinstalliere App: </source>
         <translation>Disinstalla app: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="785"/>
+        <location filename="../mainwindow.cpp" line="284"/>
+        <source> konnte nicht deinstalliert werden !</source>
+        <translation> non può essere disinstallato!</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="313"/>
         <source>Lade Hilfe...</source>
         <translation>Caricamento della guida...</translation>
     </message>
