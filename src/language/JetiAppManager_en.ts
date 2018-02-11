@@ -103,7 +103,7 @@ Enjoy !</translation>
         <translation>- Connect the transmitter to the computer and select the drive
 - Select app from the list
 - Click Install
-- Finished</translation>
+- Done</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="143"/>

@@ -333,7 +333,7 @@ void AppManager::downloadFinished(QNetworkReply *reply)
         qDebug("ERROR: Download of %s failed: %s",url.toEncoded().constData(),qPrintable(reply->errorString()));
     } else {
         if (isHttpRedirect(reply)) {
-            qDebug("ERROR: Request was redirected");
+            qDebug() << "ERROR: Request was redirected" << QUrl(reply->url()).toString();
         } else {
             QIODevice *data = reply;
 

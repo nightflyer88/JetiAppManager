@@ -3,7 +3,7 @@ body{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #444444;
     line-height: 1;
-    max-width: 960px;
+    max-width: 1960px;
     padding: 30px;
 }
 h1, h2, h3, h4 {
@@ -58,11 +58,11 @@ li ul, li ul {
 p, ul, ol {
     font-size: 16px;
     line-height: 24px;
-    max-width: 540px;
+    max-width: 1000px;
 }
 pre {
     padding: 0px 24px;
-    max-width: 800px;
+    max-width: 1800px;
     white-space: pre-wrap;
 }
 code {
@@ -73,13 +73,13 @@ code {
 aside {
     display: block;
     float: right;
-    width: 390px;
+    width: 1390px;
 }
 blockquote {
     border-left:.5em solid #eee;
     padding: 0 2em;
     margin-left:0;
-    max-width: 476px;
+    max-width: 1476px;
 }
 blockquote  cite {
     font-size:14px;
@@ -92,10 +92,10 @@ blockquote cite:before {
 
 blockquote p {
     color: #666;
-    max-width: 460px;
+    max-width: 1460px;
 }
 hr {
-    width: 540px;
+    width: 1540px;
     text-align: left;
     margin: 0 auto 0 0;
     color: #999;
