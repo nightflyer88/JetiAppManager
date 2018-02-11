@@ -113,16 +113,19 @@ bool AppManager::uninstallApp(Transmitter transmitter, QString appName)
 
         }
 
-        if(error){
-            qDebug() << "ERROR: App uninstall failed";
-        }else{
-            qDebug() << "app successfully uninstalled";
-        }
-
         app.doUninstall = false;
 
-        return error;
+        if(error){
+            qDebug() << "ERROR: App uninstall failed";
+            return false;
+        }
+
+        qDebug() << "app successfully uninstalled";
+        return true;
+
     }
+
+    return false;
 }
 
 void AppManager::doDownload(const QUrl &url, QString appName, int fileType)
@@ -184,6 +187,142 @@ bool AppManager::isTransmitterSupportLua(QString rootpath)
     return false;
 }
 
+bool AppManager::encodeAppInformation(QString file)
+{
+
+    QString local = getLocalLanguage();
+
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(file.toUtf8());
+    if(jsonDocument.isObject()){
+        QJsonObject appObject = jsonDocument.object();
+
+        foreach (QString name, appObject.keys()) {
+
+            App app;
+            QJsonObject appValue = appObject[name].toObject();
+            app.name = name;
+
+            app = encodeAppValues(appValue, app);
+
+            // read translation
+            if (appValue.contains(local) && appValue[local].isObject())
+                app = encodeAppValues(appValue[local].toObject(), app);
+
+            // download app image
+            QUrl urlImg = QUrl::fromEncoded(app.previewImgURL.toLocal8Bit());
+            if(urlImg.isValid()){
+                doDownload(urlImg,app.name, previewIcon);
+            }
+
+            // add app to list
+            applist.insert(app.name, app);
+            emit(hasNewApp());
+        }
+
+        return true;
+
+    }
+
+    return false;
+}
+
+AppManager::App AppManager::encodeAppValues(QJsonObject value, App app)
+{
+
+    // App name
+    if (value.contains("appName") && value["appName"].isString())
+        app.name = value["appName"].toString();
+
+    // check if same app exist
+    if(applist.contains(app.name)){
+        int appCount = 0;
+        QString newName = app.name;
+        while(applist.contains(newName)){
+            appCount++;
+            newName = app.name + " [" +QString::number(appCount) +"]";
+        }
+        app.name = newName;
+    }
+
+    // Author name
+    if (value.contains("author") && value["author"].isString())
+        app.author = value["author"].toString();
+
+    // App version
+    if (value.contains("version") && value["version"].isString())
+        app.version = value["version"].toString();
+
+    // Preview image
+    if (value.contains("previewImg") && value["previewImg"].isString())
+        app.previewImgURL = value["previewImg"].toString();
+
+    // App description
+    if (value.contains("description") && value["description"].isString())
+        app.description = value["description"].toString();
+
+    // required transmitter firmware
+    if (value.contains("requiredFirmware") && value["requiredFirmware"].isDouble())
+        app.requiredFirmware = value["requiredFirmware"].toDouble();
+
+    // source files for all transmitters
+    if (value.contains("sourceFile") && value["sourceFile"].isArray()){
+        QJsonArray sourceFileArray = value["sourceFile"].toArray();
+
+        foreach (const QJsonValue& sourcefile, sourceFileArray) {
+            app.sourceFile.append(sourcefile.toString());
+        }
+    }
+
+    // source files only for DC/DS 14,16 transmitters
+    if (value.contains("sourceFile14_16") && value["sourceFile14_16"].isArray()){
+        QJsonArray sourceFileArray = value["sourceFile14_16"].toArray();
+
+        foreach (const QJsonValue& sourcefile, sourceFileArray) {
+            app.sourceFile14_16.append(sourcefile.toString());
+        }
+    }
+
+    // source files only for DC/DS 24 transmitter
+    if (value.contains("sourceFile24") && value["sourceFile24"].isArray()){
+        QJsonArray sourceFileArray = value["sourceFile24"].toArray();
+
+        foreach (const QJsonValue& sourcefile, sourceFileArray) {
+            app.sourceFile24.append(sourcefile.toString());
+        }
+    }
+
+    // destination path
+    if (value.contains("destinationPath") && value["destinationPath"].isArray()){
+        QJsonArray destinationPathArray = value["destinationPath"].toArray();
+
+        foreach (const QJsonValue& destinationpath, destinationPathArray) {
+            app.destinationPath.append(destinationpath.toString());
+        }
+    }
+
+    return app;
+}
+
+QString AppManager::getLocalLanguage()
+{
+    QSettings settings;
+    QString locale = settings.value("language", DEFAULT_LANGUAGE).toString(); // "JetiAppManager_en.qm"
+
+    if(locale == QLocale::languageToString(QLocale(DEFAULT_LANGUAGE).language())){
+        locale = DEFAULT_LANGUAGE;
+    }
+
+    if(locale != DEFAULT_LANGUAGE){
+        locale.truncate(locale.lastIndexOf('.')); // "JetiAppManager_en"
+        locale.remove(0, QString::fromUtf8("JetiAppManager_").length()); // "en"
+    }
+
+    if(locale == "cs")
+        locale = "cz";
+
+    return locale;
+}
+
 void AppManager::downloadFinished(QNetworkReply *reply)
 {
     QUrl url = reply->url();
@@ -200,95 +339,8 @@ void AppManager::downloadFinished(QNetworkReply *reply)
 
             if(fileType == appInfofile){
 
-                QString file = data->readAll();
-
-                // encode source file
-                QJsonDocument source = QJsonDocument::fromJson(file.toUtf8());
-                if(source.isObject()){
-                    QJsonObject appName = source.object();
-
-                    foreach (QString name, appName.keys()) {
-                        QJsonObject value = appName[name].toObject();
-                        App app;
-
-                        // check if same app exist
-                        if(applist.contains(name)){
-                            int appCount = 0;
-                            QString newName = name;
-                            while(applist.contains(newName)){
-                                appCount++;
-                                newName = name + " [" +QString::number(appCount) +"]";
-                            }
-                            name = newName;
-                        }
-
-                        // Author name
-                        if (value.contains("author") && value["author"].isString())
-                            app.author = value["author"].toString();
-
-                        // App version
-                        if (value.contains("version") && value["version"].isString())
-                            app.version = value["version"].toString();
-
-                        // Preview image
-                        if (value.contains("previewImg") && value["previewImg"].isString()){
-                            QUrl urlImg = QUrl::fromEncoded(value["previewImg"].toString().toLocal8Bit());
-                            if(urlImg.isValid()){
-                                doDownload(urlImg,name, previewIcon);
-                            }
-                        }
-
-                        // App description
-                        if (value.contains("description") && value["description"].isString())
-                            app.description = value["description"].toString();
-
-                        // required transmitter firmware
-                        if (value.contains("requiredFirmware") && value["requiredFirmware"].isDouble())
-                            app.requiredFirmware = value["requiredFirmware"].toDouble();
-
-                        // source files for all transmitters
-                        if (value.contains("sourceFile") && value["sourceFile"].isArray()){
-                            QJsonArray sourceFileArray = value["sourceFile"].toArray();
-
-                            foreach (const QJsonValue& sourcefile, sourceFileArray) {
-                                app.sourceFile.append(sourcefile.toString());
-                            }
-                        }
-
-                        // source files only for DC/DS 14,16 transmitters
-                        if (value.contains("sourceFile14_16") && value["sourceFile14_16"].isArray()){
-                            QJsonArray sourceFileArray = value["sourceFile14_16"].toArray();
-
-                            foreach (const QJsonValue& sourcefile, sourceFileArray) {
-                                app.sourceFile14_16.append(sourcefile.toString());
-                            }
-                        }
-
-                        // source files only for DC/DS 24 transmitter
-                        if (value.contains("sourceFile24") && value["sourceFile24"].isArray()){
-                            QJsonArray sourceFileArray = value["sourceFile24"].toArray();
-
-                            foreach (const QJsonValue& sourcefile, sourceFileArray) {
-                                app.sourceFile24.append(sourcefile.toString());
-                            }
-                        }
-
-                        // destination path
-                        if (value.contains("destinationPath") && value["destinationPath"].isArray()){
-                            QJsonArray destinationPathArray = value["destinationPath"].toArray();
-
-                            foreach (const QJsonValue& destinationpath, destinationPathArray) {
-                                app.destinationPath.append(destinationpath.toString());
-                            }
-                        }
-
-                        // add app to list
-                        applist.insert(name, app);
-                        emit(hasNewApp());
-                    }
-
-                }else{
-                    qDebug("ERROR: json syntax error in file: %s",url.toEncoded().constData());
+                if(!encodeAppInformation(data->readAll())){
+                    qDebug("ERROR: syntax error in json-file: %s",url.toEncoded().constData());
                 }
 
             }else if(fileType == descriptionfile){
@@ -301,9 +353,9 @@ void AppManager::downloadFinished(QNetworkReply *reply)
 
                 // load preview icon
                 if(applist.contains(appName)){
-                    App curApp = applist.value(appName);
-                    curApp.previewImg.loadFromData(data->readAll());
-                    applist[appName] = curApp;
+                    App app = applist.value(appName);
+                    app.previewImg.loadFromData(data->readAll());
+                    applist[appName] = app;
 
                     emit(hasNewApp());
                 }

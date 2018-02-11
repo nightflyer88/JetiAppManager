@@ -279,7 +279,7 @@ void MainWindow::on_buttonUninstall_clicked()
 
     ui->statusBar->showMessage(tr("Deinstalliere App: ") + currentApp);
 
-    if(appManager->uninstallApp(appManager->transmitterList[getCurrentTransmitter()], currentApp)){
+    if(!appManager->uninstallApp(appManager->transmitterList[getCurrentTransmitter()], currentApp)){
         QMessageBox messageBox;
         messageBox.critical(0,"Error",currentApp + tr(" konnte nicht deinstalliert werden !"));
     }

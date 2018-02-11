@@ -39,10 +39,10 @@ public:
     };
 
     struct App{
-        bool doInstall = false;
-        bool doUninstall = false;
-        QString author;
+        QString name;
         QString version;
+        QString author;
+        QString previewImgURL;
         QPixmap previewImg;
         QString description;
         float requiredFirmware = 0;
@@ -50,6 +50,8 @@ public:
         QStringList sourceFile14_16;        //source files only for DC/DS 14,16
         QStringList sourceFile24;           //source files only for DC/DS 24
         QStringList destinationPath;
+        bool doInstall = false;
+        bool doUninstall = false;
     };
     QMap<QString, App> applist;
 
@@ -111,6 +113,12 @@ private:
     bool isTransmitterValid(QString rootpath);
 
     bool isTransmitterSupportLua(QString rootpath);
+
+    bool encodeAppInformation(QString file);
+
+    App encodeAppValues(QJsonObject value, App app);
+
+    QString getLocalLanguage();
 
 
 public slots:
