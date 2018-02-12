@@ -15,7 +15,7 @@ Unter *Einstellungen* können weiter App-Quellen definiert werden. Es muss ledig
 
 ### Installation
 
-Neuste Version des Jeti App Manager für Mac oder Windows hier herunterladen: https://github.com/nightflyer88/JetiAppManager/releases
+Neuste Version des [Jeti App Manager](https://github.com/nightflyer88/JetiAppManager/releases) für Mac oder Windows herunterladen.
 
 #### Mac
 
@@ -27,18 +27,23 @@ JetiAppManager_setup.exe herunterladen, ausführen und den Anweisungen folgen. S
 
 ### Quelldatei
 
-Jeder App Entwickler der seine Apps anbieten möchte, muss eine *.json Quelldatei erstellen. In der *.json Quelldatei sind dann alle nötigen Informationen zur App enthalten, unter anderem: benötigte Dateien, Ziel Pfade auf dem Sender, minimale Hard- und Softwareanforderungen des Senders, App-Beschreibung, Vorschaubild, usw.
+Jeder App Entwickler der seine Apps anbieten möchte, muss eine JSON Quelldatei erstellen. In der JSON Quelldatei sind dann alle nötigen Informationen zur App enthalten, unter anderem: benötigte Dateien, Ziel Pfade auf dem Sender, minimale Hard- und Softwareanforderungen des Senders, App-Beschreibung, Vorschaubild, usw.
 
-Die Quelldatei kann zB. im App Repository auf GIT liegen oder sonst wo im Web. Der Anwender braucht dann nur einen Link zu der *.json Datei. Dieser Link kann nun einfach unter *Einstellungen* auf einer neuen Zeile eingefügt werden. Der Link muss direkt zur Datei führen und darf nicht umgeleitet sein. 
+Die Quelldatei kann zB. im App Repository auf GIT liegen oder sonst wo im Web. Der Anwender braucht dann nur einen Link zu der JSON Datei. Dieser Link kann nun einfach unter *Datei -> Einstellungen* auf einer neuen Zeile eingefügt werden. Möchte ein App Entwickler seine Apps nur für sich selber nutzen und nicht veröffentlichen, kann die App auch auf dem lokalen Rechner gespeichert sein. Dazu muss die JSON Datei ebenfalls auf dem lokalen Rechner vorhanden sein. Die URL für lokale Dateien muss nach dem unten stehenden Beispiel angegeben werden.
 
-Beispiel Link:
+Beispiel Links:
 ```
-https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json
+https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json	<- Datei wird aus dem Web geladen
+file:///Users/path_to_file/test.json							<- Datei wird vom lokalen Rechner geladen
+file:///c:/path_to_file/test.json							<- Pfad für eine lokale Datei auf einem Windows Rechner
+
 ```
 
-Die Quell-Datei muss im *.json Format sein. Mit diesem online [Tool](http://jsoneditoronline.org) ist die Quelldatei einfach und schnell erstellt, und wird auch auf Syntaxfehler geprüft.
 
-Die Quelldatei kann mehrere Apps enthalten und muss wie in den folgenden Beispielen struckturiert sein:
+
+Die Quell-Datei muss im JSON Format sein. Mit diesem online [Tool](http://jsoneditoronline.org) ist die Quelldatei einfach und schnell erstellt, und wird auch auf Syntaxfehler geprüft.
+
+Die Quelldatei kann mehrere Apps enthalten und muss wie in den folgenden Beispielen strukturiert sein:
 
 Beispiel für mehrere Apps pro Quelldatei:
 ```

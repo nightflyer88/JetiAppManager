@@ -15,7 +15,7 @@ Under *Settings*, app sources can still be defined. All you have to do is insert
 
 ### installation
 
-Download the latest version of Jeti App Manager for Mac or Windows here: https://github.com/nightflyer88/JetiAppManager/releases
+Download the latest version of [Jeti App Manager](https://github.com/nightflyer88/JetiAppManager/releases) for Mac or Windows.
 
 #### Mac
 
@@ -27,16 +27,18 @@ Download JetiAppManager_setup.exe, run it and follow the instructions. If the Je
 
 ### source file
 
-Any app developer who wants to offer his apps must create a *.json source file. The * .json source file will then contain all the necessary information about the app, including: required files, destination paths on the transmitter, minimum transmitter hardware and software requirements, app description, preview image, etc.
+Any app developer who wants to offer his apps must create a JSON source file. The JSON source file will then contain all the necessary information about the app, including: required files, destination paths on the transmitter, minimum transmitter hardware and software requirements, app description, preview image, etc.
 
-The source file can eg. in the app repository on GIT or anywhere else on the web. The user then only needs a link to the *.json file. This link can now be easily inserted under *Settings* on a new line. The link must lead directly to the file and must not be redirected.
+The source file can eg. in the app repository on GIT or anywhere else on the web. The user then only needs a link to the JSON file. This link can now be easily inserted under *File -> Settings* on a new line. If an app developer only wants to use his apps for himself and does not publish them, the app can also be saved on the local computer. For this, the JSON file must also be available on the local computer. The URL for local files must be specified as shown in the example below.
 
-Example link:
+Example links:
 ```
-https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json
+https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json	<- File is loaded from the web
+file:///Users/path_to_file/test.json							<- File is loaded from the local computer
+file:///c:/path_to_file/test.json							<- Path for a local file on a Windows machine
 ```
 
-The source file must be in *.json format. With this online [tool](http://jsoneditoronline.org) the source file is created easily and quickly, and is also checked for syntax errors.
+The source file must be in JSON format. With this online [tool](http://jsoneditoronline.org) the source file is created easily and quickly, and is also checked for syntax errors.
 
 The source file can contain multiple apps and must be structured as in the following examples:
 
