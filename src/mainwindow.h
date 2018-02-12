@@ -3,34 +3,17 @@
 
 #include <QMainWindow>
 
-#include "document.h"
-#include "preferences.h"
 #include "defaults.h"
 #include "appmanager.h"
+#include "preferences.h"
 #include "listdelegate.h"
+#include "document.h"
 
 #include <QMessageBox>
 #include <QSettings>
 
 #include <QDebug>
-#include <QJsonDocument>
-#include <QJsonObject>
-
-#include <QFile>
-#include <QFileInfo>
-
-#include <QMap>
-#include <QStringList>
-
-#include <QtNetwork>
-#include <QUrl>
 #include <QWebChannel>
-
-#include <QListWidgetItem>
-#include <QRegExp>
-
-#include <stdio.h>
-
 
 namespace Ui {
 class MainWindow;

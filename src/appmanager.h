@@ -3,26 +3,12 @@
 
 #include "defaults.h"
 
-#include <QSettings>
-
 #include <QDebug>
+#include <QSettings>
 #include <QJsonDocument>
-#include <QJsonObject>
-
 #include <QFile>
-#include <QFileInfo>
-
-#include <QMap>
-#include <QStringList>
-
 #include <QtNetwork>
-#include <QUrl>
-#include <QWebChannel>
-
 #include <QListWidgetItem>
-#include <QRegExp>
-
-#include <stdio.h>
 
 class AppManager : public QObject
 {

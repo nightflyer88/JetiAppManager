@@ -3,12 +3,11 @@
 
 #include "defaults.h"
 
-#include <QDialog>
 #include <QDebug>
+#include <QDialog>
 #include <QSettings>
 #include <QDir>
 #include <QFile>
-#include <QFileInfo>
 
 namespace Ui {
 class Preferences;
