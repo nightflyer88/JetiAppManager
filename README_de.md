@@ -11,7 +11,7 @@ und auf installieren drücken - Fertig !
 Der Jeti App Manager wird auf dem lokalen Computer (Mac oder Windows) installiert, die LUA-Apps werden durch eine Quelldatei eingebunden, so kann der Anwender selber bestimmen welche Apps aus welchen Quellen er haben möchte. 
 Die Apps sind jedoch nicht lokal gespeichert, sondern werden erst bei der installation auf den Sender aus dem Internet geladen. Dadurch wird garantiert, dass der Anwender immer auf dem neusten Software Stand ist. 
 
-Unter *Einstellungen* können weiter App-Quellen definiert werden. Es muss lediglich ein Link zu dieser *.json Quelldatei eingefügt werden (pro Zeile ein Link). Dieser Link zu der *.json Datei muss der App-Entwickler bereitstellen. Da die Quelldatei ebenfalls nicht lokal gespeichert ist, werden so immer die neusten App Versionen geladen, auch neue Apps von dem App-Entwickler werden automatisch angezeigt, ohne das man etwas aktuallisieren muss. 
+Unter *Datei -> Einstellungen* können weiter App-Quellen definiert werden. Es muss lediglich ein Link zu dieser JSON Quelldatei eingefügt werden (pro Zeile ein Link). Dieser Link zu der JSON Datei muss der App-Entwickler bereitstellen. Da die Quelldatei ebenfalls nicht lokal gespeichert ist, werden so immer die neusten App Versionen geladen, auch neue Apps von dem App-Entwickler werden automatisch angezeigt, ohne das man etwas aktualisieren muss. 
 
 ### Installation
 
@@ -76,7 +76,7 @@ Beispiel für mehrere Apps pro Quelldatei:
   }
 }
 ```
-Die einzelnen Apps werden in der JSON Datei als Object{} definiert. Der Object-Name entspricht dem App Name. In einer JSON Datei gibt es keine Begrenzung der maximal anzahl Apps.
+Die einzelnen Apps werden in der JSON Datei als Object{} definiert. Der Object-Name entspricht dem App Name. In einer JSON Datei gibt es keine Begrenzung der maximal Anzahl Apps.
 
 
 Beispiel für eine App die auf jedem Sender läuft:
@@ -98,7 +98,7 @@ Beispiel für eine App die auf jedem Sender läuft:
   }
 }
 ```
-Sollte die App auf jeden Sendertyp installiert werden können, so kann die Liste der App-Dateien mit dem Key-Wort _**sourceFile**_ definiert werden. Sind die Zielpfade auf dem Sender nicht verhanden, werden diese erstellt. Bei der Deinstallation werden leere Ordner im /Apps Verzeichnis automatisch gelöscht.
+Sollte die App auf jeden Sendertyp installiert werden können, so kann die Liste der App-Dateien mit dem Key-Wort _**sourceFile**_ definiert werden. Sind die Zielpfade auf dem Sender nicht vorhanden, werden diese erstellt. Bei der Deinstallation werden leere Ordner im /Apps Verzeichnis automatisch gelöscht.
 
 Beispiel für eine App, die die Senderfirmware 4.23 oder höher voraussetzt, und verschiedene App-Versionen für DC/DS14-16 oder DC/DS24 enthält.
 ```
@@ -124,14 +124,14 @@ Beispiel für eine App, die die Senderfirmware 4.23 oder höher voraussetzt, und
   }
 }
 ```
-Sollte die App nur auf einer DC/DS24 installiert werden können, so wird die Dateiliste mit dem Key-Wort _**sourceFile24**_ definiert. Für die Sendertypn DC/DS14-16 wird _**sourceFile14_16**_ definiert. Die minimale Senderfirmware wird mit dem Key-Wort _**requiredFirmware**_ und als Double-Zahl definiert.
+Sollte die App nur auf einer DC/DS24 installiert werden können, so wird die Dateiliste mit dem Key-Wort _**sourceFile24**_ definiert. Für die Sendertypen DC/DS14-16 wird _**sourceFile14_16**_ definiert. Die minimale Senderfirmware wird mit dem Key-Wort _**requiredFirmware**_ und als Double-Zahl definiert.
 
 Beispiel für eine mehrsprachige App:
 ```
 {
-  "LUA App deutsch": {                                  <-- standart Name der App (hier in Deutsch)
+  "LUA App deutsch": {                                  <-- Standard Name der App (hier in Deutsch)
     "author": "M. Lehmann",                             # Standart informationen der App
-    "version": "V1.1",                                  # ist keine andere Sprache vorhanden werden dies informationen verwendet
+    "version": "V1.1",                                  # ist keine andere Sprache vorhanden werden dies Informationen verwendet
     "previewImg": "https://raw.git.../qpsQRcode.jpg",
     "description": "https://raw.git.../README.md",
     "requiredFirmware": 4.23,
@@ -169,7 +169,7 @@ Momentan werden die folgenden Sprachen unterstützt:
 | Französisch  | fr     |
 | Italienisch  | it     |
 | Spanisch     | es     |
-| Portugisisch | pt     |
+| Portugiesisch| pt     |
 
 
 Alle Links zu den Dateien müssen direkt sein. Auch die Bilder die in der Beschreibung (*.md Datei) verlinkt sind müssen 

@@ -11,9 +11,9 @@ and press on install - Done!
 The Jeti App Manager is installed on the local computer (Mac or Windows), the LUA apps are integrated by a source file, so the user can decide for themselves which apps from which sources he would like to have.
 However, the apps are not stored locally, but are only downloaded from the Internet during installation on the transmitter. This guarantees that the user is always up to date with the latest software.
 
-Under *Settings*, app sources can still be defined. All you have to do is insert a link to this * .json source file (one link per line). This link to the * .json file must be provided by the app developer. Since the source file is also not stored locally, the latest app versions are always loaded, and new apps are automatically displayed by the app developer, without having to update anything.
+Under *File -> Settings*, app sources can still be defined. All you have to do is insert a link to this JSON source file (one link per line). This link to the JSON file must be provided by the app developer. Since the source file is also not stored locally, the latest app versions are always loaded, and new apps are automatically displayed by the app developer, without having to update anything.
 
-### installation
+### Installation
 
 Download the latest version of [Jeti App Manager](https://github.com/nightflyer88/JetiAppManager/releases) for Mac or Windows.
 
@@ -25,7 +25,7 @@ Download and open JetiAppManager.dmg, drag and drop the JetiAppManager.app into 
 
 Download JetiAppManager_setup.exe, run it and follow the instructions. If the Jeti App Manager does not start, it may be necessary to install Visual Studio 2015 Express.
 
-### source file
+### Source file
 
 Any app developer who wants to offer his apps must create a JSON source file. The JSON source file will then contain all the necessary information about the app, including: required files, destination paths on the transmitter, minimum transmitter hardware and software requirements, app description, preview image, etc.
 
@@ -160,16 +160,16 @@ Currently the following languages are supported:
 
 | Language     | Key	|
 |--------------|--------|
-| Deutsch      | de     |
-| Englisch     | en     |
-| Tschechisch  | cz     |
-| Französisch  | fr     |
-| Italienisch  | it     |
-| Spanisch     | es     |
-| Portugisisch | pt     |
+| German       | de     |
+| English      | en     |
+| Czech        | cz     |
+| French       | fr     |
+| Italian      | it     |
+| Spanish      | es     |
+| Portuguese   | pt     |
 
 
-All links to the files must be direct. Also the pictures which are linked in the description (* .md file) must
+All links to the files must be direct. Also the pictures which are linked in the description (*.md file) must
 directly to the file and may not be redirected.
 
 Example links:
