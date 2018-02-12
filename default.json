@@ -3,7 +3,7 @@
     "author": "M. Lehmann",
     "version": "V1.1",
     "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/img/qpsQRcode.jpg",
-    "description": "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/README.md",
+    "description": "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/README_en.md",
     "sourceFile24": [
       "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/gpsQRcode.lc",
       "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/gpsQRcode/gpsQRcode.jsn"
@@ -11,7 +11,10 @@
     "destinationPath": [
       "/Apps",
       "/Apps/gpsQRcode"
-    ]
+    ],
+    "de": {
+      "description": "https://raw.githubusercontent.com/nightflyer88/Lua_gpsQRcode/master/README_de.md"
+    }
   },
   "Rx Battery Monitor": {
     "author": "M. Lehmann",
