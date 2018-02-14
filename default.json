@@ -19,7 +19,6 @@
   "Rx Battery Monitor": {
     "author": "M. Lehmann",
     "version": "V1.4",
-    "previewImg": "",
     "description": "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/README.md",
     "sourceFile": [
       "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/RxBattMon.lc",
@@ -45,8 +44,6 @@
   "Automatic Trainer Switch": {
     "author": "JETI model",
     "version": "V1.0",
-    "previewImg": "",
-    "description": "",
     "sourceFile": [
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Automatic%20Trainer%20Switch/TrainSw.lua"
     ],
@@ -57,8 +54,6 @@
   "Battery Monitor": {
     "author": "JETI model",
     "version": "V1.2",
-    "previewImg": "",
-    "description": "",
     "sourceFile": [
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Battery%20Monitor/BattMon.lua",
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Battery%20Monitor/BattMon/locale.jsn"
@@ -71,8 +66,6 @@
   "Battery Voltage": {
     "author": "JETI model",
     "version": "V1.1",
-    "previewImg": "",
-    "description": "",
     "sourceFile": [
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Battery%20Voltage/BattVolt.lua",
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Battery%20Voltage/BattVolt/locale.jsn"
@@ -84,8 +77,6 @@
   },
   "Discharged Flightpack": {
     "author": "JETI model",
-    "version": "V1.1",
-    "previewImg": "",
     "description": "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Discharged%20Flightpack/Readme.md",
     "sourceFile": [
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Discharged%20Flightpack/MainLow.lua",
@@ -99,8 +90,6 @@
   "Preflight Check": {
     "author": "JETI model",
     "version": "V1.2",
-    "previewImg": "",
-    "description": "",
     "sourceFile": [
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight.lua",
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Preflight%20Check/Preflight/data-cz.jsn",
@@ -125,8 +114,6 @@
   "Src Dumper": {
     "author": "JETI model",
     "version": "V1.0",
-    "previewImg": "",
-    "description": "",
     "sourceFile": [
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Src%20Dumper/Dumper.lua"
     ],
@@ -137,7 +124,6 @@
   "Throttle Detent": {
     "author": "JETI model",
     "version": "V1.1",
-    "previewImg": "",
     "description": "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Throttle%20Detent/Readme.md",
     "sourceFile": [
       "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Throttle%20Detent/ThrotBmp.lua",
@@ -146,6 +132,16 @@
     "destinationPath": [
       "/Apps",
       "/Apps/ThrotBmp"
+    ]
+  },
+  "Sensor Chart": {
+    "author": "JETI model",
+    "version": "V1.2",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/JETImodel/Lua-Apps/master/Sensor%20Chart/Sensors.lua"
+    ],
+    "destinationPath": [
+      "/Apps"
     ]
   }
 }
