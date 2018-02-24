@@ -38,6 +38,7 @@ public:
         QStringList destinationPath;
         bool doInstall = false;
         bool doUninstall = false;
+        bool isNew = false;
     };
     QMap<QString, App> applist;
 
@@ -91,10 +92,14 @@ public:
 
     QString getLocalLanguage();
 
+    void saveNewApps();
+
 
 private:
 
     bool error = false;
+
+    int appInfofileCount;
 
     static bool isHttpRedirect(QNetworkReply *reply);
 
@@ -119,11 +124,15 @@ private slots:
 
 signals:
 
-    void hasNewApp();
+    void hasNewApp(QStringList newApps);
+
+    void hasNewAppInformation();
 
     void hasNewAppStatus();
 
     void hasNewAppDescription(QString file);
+
+    void appInformationDownloaded();
 
 };
 

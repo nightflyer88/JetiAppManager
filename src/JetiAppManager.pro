@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     preferences.cpp \
     previewpage.cpp \
-    appmanager.cpp
+    appmanager.cpp \
+    appinfo.cpp
 
 HEADERS  += mainwindow.h \
     document.h \
@@ -41,10 +42,12 @@ HEADERS  += mainwindow.h \
     listdelegate.h \
     preferences.h \
     previewpage.h \
-    appmanager.h
+    appmanager.h \
+    appinfo.h
 
 FORMS    += mainwindow.ui \
-    preferences.ui
+    preferences.ui \
+    appinfo.ui
 
 DISTFILES += \
     resources/marked.min.js \

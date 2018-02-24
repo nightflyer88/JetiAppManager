@@ -17,6 +17,7 @@ void AppManager::downloadAppInformation(QList<QString> sourcelist)
     qDebug()<<"download app information:";
 
     applist.clear();
+    appInfofileCount = sourcelist.count();
 
     QString source;
     foreach( source, sourcelist ){
@@ -30,6 +31,9 @@ void AppManager::getAppDescription(QString appName)
     if(applist.contains(appName)){
         App app;
         app = applist.value(appName);
+        app.isNew = false;
+        applist[appName] = app;
+        emit(hasNewAppInformation());
 
         // show description
         QUrl url = QUrl::fromEncoded(app.description.toLocal8Bit());
@@ -196,6 +200,10 @@ bool AppManager::encodeAppInformation(QString file)
     if(jsonDocument.isObject()){
         QJsonObject appObject = jsonDocument.object();
 
+        QSettings settings;
+        QMap<QString, QVariant> appmap;
+        appmap = settings.value("appList").toMap();
+
         foreach (QString name, appObject.keys()) {
 
             App app;
@@ -214,10 +222,18 @@ bool AppManager::encodeAppInformation(QString file)
                 doDownload(urlImg,app.name, previewIcon);
             }
 
+            // check if app is new
+            if(!appmap.contains(app.name)){
+                app.isNew = true;
+            }else{
+                app.isNew = appmap.value(app.name).toBool();
+            }
+
             // add app to list
             applist.insert(app.name, app);
-            emit(hasNewApp());
         }
+
+        emit(hasNewAppInformation());
 
         return true;
 
@@ -323,6 +339,25 @@ QString AppManager::getLocalLanguage()
     return locale;
 }
 
+void AppManager::saveNewApps()
+{
+    QSettings settings;
+    QMap<QString, QVariant> appmap;
+    QStringList newApps;
+
+    foreach (App app, applist) {
+        appmap.insert(app.name, app.isNew);
+        if(app.isNew)
+            newApps.append(app.name);
+    }
+
+    settings.setValue("appList", appmap);
+
+    if(!newApps.isEmpty())
+        emit(hasNewApp(newApps));
+
+}
+
 void AppManager::downloadFinished(QNetworkReply *reply)
 {
     QUrl url = reply->url();
@@ -339,8 +374,15 @@ void AppManager::downloadFinished(QNetworkReply *reply)
 
             if(fileType == appInfofile){
 
+                appInfofileCount--;
+
                 if(!encodeAppInformation(data->readAll())){
                     qDebug("ERROR: syntax error in json-file: %s",url.toEncoded().constData());
+                }
+
+                if(appInfofileCount==0){
+                    emit(appInformationDownloaded());
+                    saveNewApps();
                 }
 
             }else if(fileType == descriptionfile){
@@ -357,7 +399,7 @@ void AppManager::downloadFinished(QNetworkReply *reply)
                     app.previewImg.loadFromData(data->readAll());
                     applist[appName] = app;
 
-                    emit(hasNewApp());
+                    emit(hasNewAppInformation());
                 }
 
             }else if(fileType == sourcefile){

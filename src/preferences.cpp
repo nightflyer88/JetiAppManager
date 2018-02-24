@@ -11,6 +11,7 @@ Preferences::Preferences(QWidget *parent) :
     QSettings settings;
 
     ui->checkBox_debugLog->setChecked(settings.value("show_debuglog",DEFAULT_SHOW_DEBUGLOG).toBool());
+    ui->checkBox_newAppsAvailable->setChecked(settings.value("newApps_available",DEFAULT_NEWAPPS_AVAILABLE).toBool());
 
     // read sources
     qRegisterMetaTypeStreamOperators<QList<QString>>("Data");
@@ -42,6 +43,7 @@ void Preferences::accept()
     QSettings settings;
 
     settings.setValue("show_debuglog",ui->checkBox_debugLog->isChecked());
+    settings.setValue("newApps_available",ui->checkBox_newAppsAvailable->isChecked());
 
     // read sources from textedit
     QString plainTextEditContents = ui->sources->toPlainText();

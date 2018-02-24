@@ -8,6 +8,7 @@
 #include "preferences.h"
 #include "listdelegate.h"
 #include "document.h"
+#include "appinfo.h"
 
 #include <QMessageBox>
 #include <QSettings>
@@ -43,6 +44,8 @@ private:
 
     void getAppInformation();
 
+    bool list_newApps;
+
 private slots:
     void on_app_clicked();
 
@@ -55,6 +58,8 @@ private slots:
     void on_searchText_textChanged(const QString &arg1);
 
     void on_actionHelp_triggered();
+
+    void on_newApp(QStringList newApps);
 
     void jetiVolume_changed(int index);
 

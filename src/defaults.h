@@ -4,23 +4,24 @@
 #endif // DEFAULTS_H
 
 // Version
-#define JETIAPPMANAGER_VERSION  "V0.5"
+#define JETIAPPMANAGER_VERSION          "V0.6 Beta"
 
 
 // Default settings
-#define DEFAULT_LANGUAGE        "de"
-#define DEFAULT_SHOW_DEBUGLOG   false
-#define DEFAULT_SOURCE_URL      "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json"
+#define DEFAULT_LANGUAGE                "de"
+#define DEFAULT_NEWAPPS_AVAILABLE       true
+#define DEFAULT_SHOW_DEBUGLOG           false
+#define DEFAULT_SOURCE_URL              "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json"
 
 
 // Transmitter paths
-#define TRANSMITTER_CONFIGFILE  "/Config/Config.jsn"
-#define TRANSMITTER_APPFOLDER   "/Apps"
+#define TRANSMITTER_CONFIGFILE          "/Config/Config.jsn"
+#define TRANSMITTER_APPFOLDER           "/Apps"
 
 
 // Help file
-#define HELP_FILE_URL           "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/README.md"
-#define HELP_FILE_URL_DE        "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/README_de.md"
+#define HELP_FILE_URL                   "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/README.md"
+#define HELP_FILE_URL_DE                "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/README_de.md"
 
 
 // Font sizes
@@ -29,9 +30,11 @@
     #define FONTSIZE_APP_VERSION        10
     #define FONTSIZE_APP_AUTHOR         10
     #define FONTSIZE_APP_TAG            9
+    #define FONTSIZE_APP_FLAG           14
 #elif _WIN32
     #define FONTSIZE_APP_DESCRIPTION    14
     #define FONTSIZE_APP_VERSION        9
     #define FONTSIZE_APP_AUTHOR         9
     #define FONTSIZE_APP_TAG            7
+    #define FONTSIZE_APP_FLAG           14
 #endif

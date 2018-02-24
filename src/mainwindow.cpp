@@ -62,11 +62,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // connect signals for app list
     connect(ui->appList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),this, SLOT(on_app_clicked()));
-    connect(appManager, SIGNAL(hasNewApp()),this, SLOT(reloadAppList()));
+    connect(appManager, SIGNAL(hasNewAppInformation()),this, SLOT(reloadAppList()));
 
-    // connect signals
+    // connect other signals
     connect(appManager, SIGNAL(hasNewAppStatus()),this, SLOT(reloadAppStatus()));
     connect(appManager, SIGNAL(hasNewAppDescription(QString)),this, SLOT(reloadAppDescription(QString)));
+    connect(appManager, SIGNAL(hasNewApp(QStringList)),this, SLOT(on_newApp(QStringList)));
 
 
     // setup md-file viewer
@@ -96,6 +97,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    appManager->saveNewApps();
     delete ui;
 }
 
@@ -145,6 +147,8 @@ void MainWindow::reloadAppList(QRegExp regExp)
         item->setData(Qt::UserRole + 3, QString::number(app.requiredFirmware));
         item->setData(Qt::UserRole + 4, !app.sourceFile14_16.isEmpty() || !app.sourceFile.isEmpty());
         item->setData(Qt::UserRole + 5, !app.sourceFile24.isEmpty() || !app.sourceFile.isEmpty());
+        if(app.isNew)
+            item->setData(Qt::UserRole + 6, tr("Neu"));
         item->setData(Qt::DecorationRole, app.previewImg);
         ui->appList->addItem(item);
 
@@ -209,6 +213,7 @@ void MainWindow::on_app_clicked()
     ui->statusBar->showMessage(tr("Lade Beschreibung..."));
 
     appManager->getAppDescription(getCurrentAppName());
+
 }
 
 void MainWindow::reloadAppStatus()
@@ -252,6 +257,8 @@ void MainWindow::loadSettings()
         sizes << 200 << 0;
         ui->splitter_vertical->setSizes(sizes);
     }
+
+    list_newApps = settings.value("newApps_available",DEFAULT_NEWAPPS_AVAILABLE).toBool();
 
     getAppInformation();
 }
@@ -320,4 +327,15 @@ void MainWindow::on_actionHelp_triggered()
     }
 
     appManager->doDownload(url, "help", appManager->descriptionfile);
+}
+
+void MainWindow::on_newApp(QStringList newApps)
+{
+    if(!list_newApps)
+        return;
+
+    AppInfo *appinfo = new AppInfo(this, newApps);
+
+    appinfo->show();
+
 }

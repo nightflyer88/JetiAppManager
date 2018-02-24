@@ -67,13 +67,36 @@ void ListDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & opti
     QString requiredTransmitterFirmware = "V" + index.data(Qt::UserRole + 3).toString();
     bool support14_16 = index.data(Qt::UserRole + 4).toBool();
     bool support24 = index.data(Qt::UserRole + 5).toBool();
+    QString appFlagText = index.data(Qt::UserRole + 6).toString();
 
 
-    //ICON
+    // ICON
     int imageSpace = 100;
     if (!ic.isNull()) {
         r = option.rect.adjusted(5, 10, -10, -10);
         ic.paint(painter, r.left(), r.top(), 80, 80, Qt::AlignVCenter|Qt::AlignLeft);
+    }
+
+    // New App flag
+    if(appFlagText != ""){
+        r = option.rect.adjusted(0, 0, -50, -50);
+        QPainterPath path;
+        path.moveTo(r.left() + 20, r.top());
+        path.lineTo(r.left(),r.top() + 20);
+        path.lineTo(r.left(),r.top() + 50);
+        path.lineTo(r.left() + 50,r.top());
+        path.lineTo(r.left() + 20,r.top());
+        painter->fillPath(path, QBrush(QColor::fromRgb(255,38,0)));
+
+
+        painter->save();
+        painter->translate(r.left(),r.top());
+        painter->rotate(-45);
+        painter->setPen(fontMarkedPen);
+        painter->setFont( QFont( "Lucida Grande", FONTSIZE_APP_FLAG, QFont::Bold ) );
+        painter->drawText(-25, 0, 50, 50, Qt::AlignCenter|Qt::AlignHCenter, appFlagText, &r);
+        painter->rotate(45);
+        painter->restore();
     }
 
     int tagSpace = imageSpace;
