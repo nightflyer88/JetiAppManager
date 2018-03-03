@@ -2,9 +2,52 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
+    <name>AppInfo</name>
+    <message>
+        <location filename="../appinfo.ui" line="14"/>
+        <source>App Information</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../appinfo.ui" line="20"/>
+        <source>Info</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../appinfo.cpp" line="17"/>
+        <source>Neue Apps</source>
+        <translation>Nouvelles applications</translation>
+    </message>
+    <message>
+        <location filename="../appinfo.cpp" line="19"/>
+        <source> Neue Apps sind verfügbar:</source>
+        <translation> De nouvelles applications sont disponibles:</translation>
+    </message>
+    <message>
+        <location filename="../appinfo.cpp" line="21"/>
+        <source> Neue App ist verfügbar:</source>
+        <translation> Une nouvelle application est disponible:</translation>
+    </message>
+    <message>
+        <location filename="../appinfo.cpp" line="24"/>
+        <source>App Updates</source>
+        <translation>Mises à jour</translation>
+    </message>
+    <message>
+        <location filename="../appinfo.cpp" line="26"/>
+        <source> App Updates sind verfügbar:</source>
+        <translation> Les mises à jour de l&apos;application sont disponibles:</translation>
+    </message>
+    <message>
+        <location filename="../appinfo.cpp" line="28"/>
+        <source> App Update ist verfügbar:</source>
+        <translation> La mise à jour de l&apos;application est disponible:</translation>
+    </message>
+</context>
+<context>
     <name>AppManager</name>
     <message>
-        <location filename="../appmanager.cpp" line="39"/>
+        <location filename="../appmanager.cpp" line="43"/>
         <source>keine App Beschreibung verfügbar</source>
         <translation>aucune description d&apos;application disponible</translation>
     </message>
@@ -51,7 +94,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="130"/>
-        <location filename="../mainwindow.cpp" line="227"/>
+        <location filename="../mainwindow.cpp" line="251"/>
         <source>Installieren</source>
         <translation>installer</translation>
     </message>
@@ -87,7 +130,7 @@
         <translation>paramètres</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="79"/>
+        <location filename="../mainwindow.cpp" line="80"/>
         <source>- Sender am Computer anschliessen und Laufwerk wählen
 - App aus der Liste auswählen
 - Installieren drücken
@@ -98,22 +141,37 @@
 - Fait</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="143"/>
+        <location filename="../mainwindow.cpp" line="152"/>
         <source>Version: </source>
         <translation>Version: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="144"/>
+        <location filename="../mainwindow.cpp" line="153"/>
         <source>Author: </source>
         <translation>auteur: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="166"/>
+        <location filename="../mainwindow.cpp" line="158"/>
+        <source>Neu</source>
+        <translation>nouveau</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="161"/>
+        <source>Update</source>
+        <translation>actualisation</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="164"/>
+        <source>Installiert</source>
+        <translation>installations</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="185"/>
         <source>Lade App Informationen...</source>
         <translation>Chargement des informations sur l&apos;application...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="209"/>
+        <location filename="../mainwindow.cpp" line="228"/>
         <source>Lade Beschreibung...</source>
         <translation>Chargement Description...</translation>
     </message>
@@ -122,27 +180,27 @@
         <translation type="vanished">aucune description d&apos;application disponible</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="222"/>
+        <location filename="../mainwindow.cpp" line="244"/>
         <source>Aktualisieren</source>
         <translation>mettre à jour</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="270"/>
+        <location filename="../mainwindow.cpp" line="298"/>
         <source>Installiere App: </source>
         <translation>Installer l&apos;application: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="280"/>
+        <location filename="../mainwindow.cpp" line="308"/>
         <source>Deinstalliere App: </source>
         <translation>Désinstaller l&apos;application: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="284"/>
+        <location filename="../mainwindow.cpp" line="314"/>
         <source> konnte nicht deinstalliert werden !</source>
         <translation> n&apos;a pas pu être désinstallé!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="313"/>
+        <location filename="../mainwindow.cpp" line="342"/>
         <source>Lade Hilfe...</source>
         <translation>Chargement de l&apos;aide...</translation>
     </message>
@@ -156,6 +214,11 @@
     </message>
     <message>
         <location filename="../preferences.ui" line="28"/>
+        <source>Meldung wenn neue Apps verfügbar sind </source>
+        <translation>Message lorsque de nouvelles applications sont disponibles </translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="58"/>
         <source>Debug Log anzeigen</source>
         <translation>Afficher le journal de débogage</translation>
     </message>
@@ -165,7 +228,12 @@
         <translation>langue</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="68"/>
+        <location filename="../preferences.ui" line="65"/>
+        <source>Meldung wenn App Updates verfügbar sind</source>
+        <translation>Message lorsque les mises à jour de l&apos;application sont disponibles</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="82"/>
         <source>Quellen (pro Zeile eine URL):</source>
         <translation>Sources (une URL par ligne):</translation>
     </message>
