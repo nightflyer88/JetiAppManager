@@ -17,11 +17,12 @@ class AppManager : public QObject
 public:
     AppManager(QObject *parent);
 
-    enum{
+    enum files{
         appInfofile=1,
         descriptionfile,
         previewIcon,
-        sourcefile
+        installSourcefile,
+        sha1FileCheck
     };
 
     struct App{
@@ -36,9 +37,9 @@ public:
         QStringList sourceFile14_16;        //source files only for DC/DS 14,16
         QStringList sourceFile24;           //source files only for DC/DS 24
         QStringList destinationPath;
-        bool doInstall = false;
-        bool doUninstall = false;
+        bool isInstalled = false;
         bool isNew = false;
+        bool updateAvailable = false;
     };
     QMap<QString, App> applist;
 
@@ -62,11 +63,13 @@ public:
     QNetworkAccessManager manager;
     QVector<QNetworkReply *> currentDownloads;
 
-    void doDownload(const QUrl &url, QString appName, int fileType);
+    void doDownload(const QUrl &url, QString appName, int fileType, QByteArray oldFileHash = 0, bool printDebug = true);
 
     void downloadAppInformation(QList<QString> sourcelist);
 
     void getAppDescription(QString appName);
+
+    void checkAllAppsForUpdate(Transmitter transmitter);
 
     void installApp(Transmitter transmitter, QString appName);
 
@@ -86,7 +89,7 @@ public:
 
     QStringList transmitterVolumes();
 
-    int currentTransmitterIndex = 0;
+    void setCurrentTransmitterIndex(int index);
 
     QStringList getAppSourceList(Transmitter transmitter, App app);
 
@@ -99,7 +102,15 @@ private:
 
     bool error = false;
 
-    int appInfofileCount;
+    int currentTransmitterIndex = 0;
+
+    bool appInformationIsLoaded = false;
+
+    int countDownload_appInfofile;
+
+    int countDownload_installSourcefile;
+
+    int countDownload_sha1FileCheck;
 
     static bool isHttpRedirect(QNetworkReply *reply);
 
@@ -132,7 +143,9 @@ signals:
 
     void hasNewAppDescription(QString file);
 
-    void appInformationDownloaded();
+    void hasNewAppUpdate(QStringList appUpdate);
+
+    void appInformationIsDownloaded();
 
 };
 

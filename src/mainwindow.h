@@ -9,6 +9,8 @@
 #include "listdelegate.h"
 #include "document.h"
 #include "appinfo.h"
+#include "lua/lua.hpp"
+
 
 #include <QMessageBox>
 #include <QSettings>
@@ -38,16 +40,18 @@ private:
 
     AppManager *appManager = new AppManager(this);
 
+    bool show_newApps;
+
+    bool show_appUpdates;
+
     QString getCurrentAppName();
 
     int getCurrentTransmitter();
 
     void getAppInformation();
 
-    bool list_newApps;
-
 private slots:
-    void on_app_clicked();
+    void app_clicked();
 
     void on_actionPreferences_triggered();
 
@@ -59,13 +63,17 @@ private slots:
 
     void on_actionHelp_triggered();
 
-    void on_newApp(QStringList newApps);
+    void newAppAvailable(QStringList newApps);
+
+    void appUpdateAvailable(QStringList appUpdates);
 
     void jetiVolume_changed(int index);
 
     void loadSettings();
 
     void checkMountedVolumes();
+
+    void checkForAppUpdates();
 
     void reloadAppList(QRegExp regExp = QRegExp("", Qt::CaseInsensitive, QRegExp::Wildcard));
 

@@ -15,8 +15,13 @@ class AppInfo : public QDialog
     Q_OBJECT
 
 public:
-    explicit AppInfo(QWidget *parent = 0, QStringList appList = {});
+    explicit AppInfo(QWidget *parent = 0, QStringList appList = {}, int infoTyp = newAppsAvailable);
     ~AppInfo();
+
+    enum infoTyp{
+        newAppsAvailable,
+        appUpdatesAvailable
+    };
 
 private:
     Ui::AppInfo *ui;

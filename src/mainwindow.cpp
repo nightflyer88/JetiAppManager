@@ -47,7 +47,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qDebug() << "### Jeti App Manager" << JETIAPPMANAGER_VERSION << "(C) 2018 M.Lehmann ###";
 
-
     // init buttons
     ui->buttonUninstall->setHidden(true);
     ui->buttonInstall->setHidden(true);
@@ -61,14 +60,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // connect signals for app list
-    connect(ui->appList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),this, SLOT(on_app_clicked()));
+    connect(ui->appList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),this, SLOT(app_clicked()));
     connect(appManager, SIGNAL(hasNewAppInformation()),this, SLOT(reloadAppList()));
 
     // connect other signals
     connect(appManager, SIGNAL(hasNewAppStatus()),this, SLOT(reloadAppStatus()));
     connect(appManager, SIGNAL(hasNewAppDescription(QString)),this, SLOT(reloadAppDescription(QString)));
-    connect(appManager, SIGNAL(hasNewApp(QStringList)),this, SLOT(on_newApp(QStringList)));
-
+    connect(appManager, SIGNAL(appInformationIsDownloaded()),this, SLOT(checkForAppUpdates()));
+    connect(appManager, SIGNAL(hasNewApp(QStringList)),this, SLOT(newAppAvailable(QStringList)));
+    connect(appManager, SIGNAL(hasNewAppUpdate(QStringList)),this, SLOT(appUpdateAvailable(QStringList)));
 
     // setup md-file viewer
     PreviewPage *page = new PreviewPage(this);
@@ -114,6 +114,13 @@ void MainWindow::checkMountedVolumes()
 
 }
 
+void MainWindow::checkForAppUpdates()
+{
+    if(!appManager->transmitterList.isEmpty()){
+        appManager->checkAllAppsForUpdate(appManager->transmitterList[getCurrentTransmitter()]);
+    }
+}
+
 void MainWindow::reloadAppList(QRegExp regExp)
 {
     // print apps in list
@@ -147,8 +154,16 @@ void MainWindow::reloadAppList(QRegExp regExp)
         item->setData(Qt::UserRole + 3, QString::number(app.requiredFirmware));
         item->setData(Qt::UserRole + 4, !app.sourceFile14_16.isEmpty() || !app.sourceFile.isEmpty());
         item->setData(Qt::UserRole + 5, !app.sourceFile24.isEmpty() || !app.sourceFile.isEmpty());
-        if(app.isNew)
+        if(app.isNew){
             item->setData(Qt::UserRole + 6, tr("Neu"));
+            item->setData(Qt::UserRole + 7, QString::number(ListDelegate::newApp));
+        }else if(app.updateAvailable){
+            item->setData(Qt::UserRole + 6, tr("Update"));
+            item->setData(Qt::UserRole + 7, QString::number(ListDelegate::appUpdate));
+        }else if(app.isInstalled){
+            item->setData(Qt::UserRole + 6, tr("Installiert"));
+            item->setData(Qt::UserRole + 7, QString::number(ListDelegate::appInstalled));
+        }
         item->setData(Qt::DecorationRole, app.previewImg);
         ui->appList->addItem(item);
 
@@ -193,11 +208,11 @@ int MainWindow::getCurrentTransmitter()
 
 void MainWindow::jetiVolume_changed(int index)
 {
-
     if(index >= 0){
-        appManager->currentTransmitterIndex = index;
+        appManager->setCurrentTransmitterIndex(index);
         ui->type->setText(appManager->getTransmitterName(appManager->transmitterList[index]));
         ui->firmware->setText(QString::number(appManager->transmitterList[index].firmwareVersion));
+        checkForAppUpdates();
     }else{
         ui->type->setText("-");
         ui->firmware->setText("-");
@@ -207,7 +222,7 @@ void MainWindow::jetiVolume_changed(int index)
 
 }
 
-void MainWindow::on_app_clicked()
+void MainWindow::app_clicked()
 {
     // show app description
     ui->statusBar->showMessage(tr("Lade Beschreibung..."));
@@ -218,18 +233,23 @@ void MainWindow::on_app_clicked()
 
 void MainWindow::reloadAppStatus()
 {
-
     if(!appManager->transmitterList.isEmpty() && appManager->isTransmitterSupportApp(appManager->transmitterList[getCurrentTransmitter()], getCurrentAppName())){
-        ui->buttonInstall->setHidden(false);
 
         if(appManager->isAppInstalled(appManager->transmitterList[getCurrentTransmitter()],getCurrentAppName())){
-            ui->buttonInstall->setStyleSheet("background-color: rgb(15, 128, 255)");
-            ui->buttonInstall->setText(tr("Aktualisieren"));
             ui->buttonUninstall->setStyleSheet("background-color: rgb(252, 1, 7)");
             ui->buttonUninstall->setHidden(false);
+
+            if(appManager->applist[getCurrentAppName()].updateAvailable){
+                ui->buttonInstall->setStyleSheet("background-color: rgb(15, 128, 255)");
+                ui->buttonInstall->setText(tr("Aktualisieren"));
+                ui->buttonInstall->setHidden(false);
+            }else{
+                ui->buttonInstall->setHidden(true);
+            }
         }else{
             ui->buttonInstall->setStyleSheet("background-color: rgb(128, 255, 7)");
             ui->buttonInstall->setText(tr("Installieren"));
+            ui->buttonInstall->setHidden(false);
             ui->buttonUninstall->setHidden(true);
         }
 
@@ -245,7 +265,7 @@ void MainWindow::loadSettings()
 {
     QSettings settings;
 
-    qDebug()<<"read user settings from file:" << settings.fileName();
+    qDebug()<<"Read user settings from file:" << settings.fileName();
 
     // hide debugLog
     if(settings.value("show_debuglog",DEFAULT_SHOW_DEBUGLOG).toBool()){
@@ -258,7 +278,8 @@ void MainWindow::loadSettings()
         ui->splitter_vertical->setSizes(sizes);
     }
 
-    list_newApps = settings.value("newApps_available",DEFAULT_NEWAPPS_AVAILABLE).toBool();
+    show_newApps = settings.value("show_newApps",DEFAULT_SHOW_NEWAPPS).toBool();
+    show_appUpdates = settings.value("show_appUpdates",DEFAULT_SHOW_APPUPDATES).toBool();
 
     getAppInformation();
 }
@@ -286,7 +307,9 @@ void MainWindow::on_buttonUninstall_clicked()
 
     ui->statusBar->showMessage(tr("Deinstalliere App: ") + currentApp);
 
-    if(!appManager->uninstallApp(appManager->transmitterList[getCurrentTransmitter()], currentApp)){
+    if(appManager->uninstallApp(appManager->transmitterList[getCurrentTransmitter()], currentApp)){
+        reloadAppList();
+    }else{
         QMessageBox messageBox;
         messageBox.critical(0,"Error",currentApp + tr(" konnte nicht deinstalliert werden !"));
     }
@@ -329,13 +352,23 @@ void MainWindow::on_actionHelp_triggered()
     appManager->doDownload(url, "help", appManager->descriptionfile);
 }
 
-void MainWindow::on_newApp(QStringList newApps)
+void MainWindow::newAppAvailable(QStringList newApps)
 {
-    if(!list_newApps)
+    if(!show_newApps)
         return;
 
-    AppInfo *appinfo = new AppInfo(this, newApps);
+    AppInfo *appinfo = new AppInfo(this, newApps, AppInfo::newAppsAvailable);
 
     appinfo->show();
 
+}
+
+void MainWindow::appUpdateAvailable(QStringList appUpdates)
+{
+    if(!show_appUpdates)
+        return;
+
+    AppInfo *appinfo = new AppInfo(this, appUpdates, AppInfo::appUpdatesAvailable);
+
+    appinfo->show();
 }

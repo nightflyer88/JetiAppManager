@@ -22,10 +22,10 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="2" column="1">
-      <widget class="QCheckBox" name="checkBox_debugLog">
+     <item row="1" column="1">
+      <widget class="QCheckBox" name="checkBox_show_newApps">
        <property name="text">
-        <string>Debug Log anzeigen</string>
+        <string>Meldung wenn neue Apps verfügbar sind </string>
        </property>
       </widget>
      </item>
@@ -35,9 +35,6 @@
         <string>Sprache</string>
        </property>
       </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="setLanguage"/>
      </item>
      <item row="0" column="2">
       <spacer name="horizontalSpacer">
@@ -52,10 +49,20 @@
        </property>
       </spacer>
      </item>
-     <item row="1" column="1">
-      <widget class="QCheckBox" name="checkBox_newAppsAvailable">
+     <item row="0" column="1">
+      <widget class="QComboBox" name="setLanguage"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QCheckBox" name="checkBox_debugLog">
        <property name="text">
-        <string>Meldung wenn neue Apps verfügbar </string>
+        <string>Debug Log anzeigen</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QCheckBox" name="checkBox_show_appUpdates">
+       <property name="text">
+        <string>Meldung wenn App Updates verfügbar sind</string>
        </property>
       </widget>
      </item>

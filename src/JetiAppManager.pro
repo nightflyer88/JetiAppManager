@@ -27,14 +27,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += main.cpp\
+SOURCES += appinfo.cpp \
+    appmanager.cpp \
     document.cpp \
     listdelegate.cpp \
+    main.cpp \
     mainwindow.cpp \
     preferences.cpp \
-    previewpage.cpp \
-    appmanager.cpp \
-    appinfo.cpp
+    previewpage.cpp
 
 HEADERS  += mainwindow.h \
     document.h \

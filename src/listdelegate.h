@@ -13,11 +13,16 @@ class ListDelegate : public QAbstractItemDelegate
 
 public:
     ListDelegate(QObject *parent = 0);
+    virtual ~ListDelegate();
 
     void paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const;
     QSize sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const;
 
-    virtual ~ListDelegate();
+    enum infoTyp{
+        newApp,
+        appUpdate,
+        appInstalled
+    };
 
 };
 

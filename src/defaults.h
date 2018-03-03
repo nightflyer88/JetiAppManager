@@ -9,7 +9,8 @@
 
 // Default settings
 #define DEFAULT_LANGUAGE                "de"
-#define DEFAULT_NEWAPPS_AVAILABLE       true
+#define DEFAULT_SHOW_NEWAPPS            true
+#define DEFAULT_SHOW_APPUPDATES         true
 #define DEFAULT_SHOW_DEBUGLOG           false
 #define DEFAULT_SOURCE_URL              "https://raw.githubusercontent.com/nightflyer88/JetiAppManager/master/default.json"
 
@@ -30,11 +31,15 @@
     #define FONTSIZE_APP_VERSION        10
     #define FONTSIZE_APP_AUTHOR         10
     #define FONTSIZE_APP_TAG            9
-    #define FONTSIZE_APP_FLAG           14
+    #define FONTSIZE_APP_INSTALLED      8
+    #define FONTSIZE_APP_UPDATE         10
+    #define FONTSIZE_APP_NEW            14
 #elif _WIN32
     #define FONTSIZE_APP_DESCRIPTION    14
     #define FONTSIZE_APP_VERSION        9
     #define FONTSIZE_APP_AUTHOR         9
     #define FONTSIZE_APP_TAG            7
-    #define FONTSIZE_APP_FLAG           14
+    #define FONTSIZE_APP_INSTALLED      9
+    #define FONTSIZE_APP_UPDATE         10
+    #define FONTSIZE_APP_NEW            14
 #endif

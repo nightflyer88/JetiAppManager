@@ -14,10 +14,11 @@ void AppManager::close()
 
 void AppManager::downloadAppInformation(QList<QString> sourcelist)
 {
-    qDebug()<<"download app information:";
+    qDebug()<<"Download app information:";
 
     applist.clear();
-    appInfofileCount = sourcelist.count();
+    appInformationIsLoaded = false;
+    countDownload_appInfofile = sourcelist.count();
 
     QString source;
     foreach( source, sourcelist ){
@@ -33,7 +34,6 @@ void AppManager::getAppDescription(QString appName)
         app = applist.value(appName);
         app.isNew = false;
         applist[appName] = app;
-        emit(hasNewAppInformation());
 
         // show description
         QUrl url = QUrl::fromEncoded(app.description.toLocal8Bit());
@@ -53,13 +53,14 @@ void AppManager::installApp(Transmitter transmitter, QString appName)
         qDebug() << "install app to transmitter:" << appName;
 
         App app = applist.value(appName);
-        app.doInstall = true;
-        applist[appName] = app;
+
+        QStringList sourceList = getAppSourceList(transmitter, app);
+        countDownload_installSourcefile = sourceList.size();
 
         // download sources
-        foreach(QString source, getAppSourceList(transmitter, app)){
+        foreach(QString source, sourceList){
             QUrl url = QUrl::fromEncoded(source.toLocal8Bit());
-            doDownload(url, appName, sourcefile);
+            doDownload(url, appName, installSourcefile);
         }
     }
 }
@@ -70,7 +71,6 @@ bool AppManager::uninstallApp(Transmitter transmitter, QString appName)
         qDebug() << "uninstall app from transmitter:" << appName;
 
         App app = applist.value(appName);
-        app.doUninstall = true;
         error = false;
 
         QStringList sourceList = getAppSourceList(transmitter, app);
@@ -117,14 +117,15 @@ bool AppManager::uninstallApp(Transmitter transmitter, QString appName)
 
         }
 
-        app.doUninstall = false;
-
         if(error){
             qDebug() << "ERROR: App uninstall failed";
             return false;
         }
 
         qDebug() << "app successfully uninstalled";
+        app.isInstalled = false;
+        applist[appName] = app;
+
         return true;
 
     }
@@ -132,14 +133,17 @@ bool AppManager::uninstallApp(Transmitter transmitter, QString appName)
     return false;
 }
 
-void AppManager::doDownload(const QUrl &url, QString appName, int fileType)
+void AppManager::doDownload(const QUrl &url, QString appName, int fileType, QByteArray oldFileHash, bool printDebug)
 {
-    qDebug() << "download file:" << url.toString();
+    if(printDebug){
+        qDebug() << "download file:" << url.toString();
+    }
 
     QNetworkRequest request(url);
     QNetworkReply *reply = manager.get(request);
     reply->setProperty("appName", QVariant(appName));
     reply->setProperty("fileType", QVariant(fileType));
+    reply->setProperty("oldFileHash", QVariant(oldFileHash));
 
     currentDownloads.append(reply);
 }
@@ -233,7 +237,7 @@ bool AppManager::encodeAppInformation(QString file)
             applist.insert(app.name, app);
         }
 
-        emit(hasNewAppInformation());
+        //emit(hasNewAppInformation());
 
         return true;
 
@@ -374,15 +378,17 @@ void AppManager::downloadFinished(QNetworkReply *reply)
 
             if(fileType == appInfofile){
 
-                appInfofileCount--;
+                countDownload_appInfofile--;
 
                 if(!encodeAppInformation(data->readAll())){
                     qDebug("ERROR: syntax error in json-file: %s",url.toEncoded().constData());
                 }
 
-                if(appInfofileCount==0){
-                    emit(appInformationDownloaded());
+                if(countDownload_appInfofile==0){
                     saveNewApps();
+                    appInformationIsLoaded = true;
+                    emit(hasNewAppInformation());
+                    emit(appInformationIsDownloaded());
                 }
 
             }else if(fileType == descriptionfile){
@@ -402,7 +408,7 @@ void AppManager::downloadFinished(QNetworkReply *reply)
                     emit(hasNewAppInformation());
                 }
 
-            }else if(fileType == sourcefile){
+            }else if(fileType == installSourcefile){
 
                 // copy file to transmitter
                 if(applist.contains(appName)){
@@ -431,6 +437,7 @@ void AppManager::downloadFinished(QNetworkReply *reply)
                                 dir.mkpath(destPath);
 
                             if (file.open(QFile::WriteOnly)) {
+                                countDownload_installSourcefile--;
                                 file.write(data->readAll());
                             }else{
                                 qDebug() << "ERROR: Write file" << destPath + url.fileName();
@@ -440,32 +447,70 @@ void AppManager::downloadFinished(QNetworkReply *reply)
                             break;
                         }
                     }
+
+                    if(countDownload_installSourcefile == 0){
+                        if(error){
+                            qDebug() << "ERROR: App install failed";
+                        }else{
+                            qDebug() << "app successfully installed";
+                            app.isInstalled = true;
+                            app.updateAvailable = false;
+                            applist[appName] = app;
+
+                            emit(hasNewAppInformation());
+                            emit(hasNewAppStatus());
+                        }
+
+                    }
+
                 }
+
+            }else if(fileType == sha1FileCheck){
+
+                if(applist.contains(appName)){
+                    QByteArray oldFileHash = reply->property("oldFileHash").toByteArray();
+
+                    App app = applist.value(appName);
+
+                    countDownload_sha1FileCheck--;
+
+                    QByteArray file = data->readAll();
+
+                    QByteArray hash = QCryptographicHash::hash(file, QCryptographicHash::Sha1);
+
+                    if(oldFileHash != hash){
+                        app.updateAvailable = true;
+                    }
+
+                    applist[appName] = app;
+
+                    if(countDownload_sha1FileCheck == 0){
+                        QStringList appUpdates;
+
+                        foreach (App app, applist) {
+                            if(app.updateAvailable)
+                                appUpdates.append(app.name);
+                        }
+
+                        if(!appUpdates.isEmpty()){
+                            qDebug() << "App updates available:";
+                            foreach (QString appName, appUpdates) {
+                                qDebug() << appName;
+                            }
+                            emit(hasNewAppUpdate(appUpdates));
+                            emit(hasNewAppInformation());
+
+                        }
+                    }
+
+                }
+
             }
         }
     }
     currentDownloads.removeAll(reply);
     reply->deleteLater();
 
-    if(currentDownloads.isEmpty()){
-        emit(hasNewAppStatus());
-
-        if(applist.contains(appName)){
-            App app = applist.value(appName);
-            if(app.doInstall){
-                if(error){
-                    qDebug() << "ERROR: App install failed";
-                }else{
-                    qDebug() << "app successfully installed";
-                }
-
-                app.doInstall = false;
-                applist[appName] = app;
-
-                error = false;
-            }
-        }
-    }
 }
 
 bool AppManager::isTransmitterSupportApp(Transmitter transmitter, QString appName)
@@ -525,9 +570,9 @@ bool AppManager::isAppInstalled(Transmitter transmitter, QString appName)
                 destFile = transmitter.rootPath + app.destinationPath[i].right(app.destinationPath[i].size()-1) + "/" + url.fileName();
             #endif
 
-            QFileInfo check_file(destFile);
+            QFileInfo file(destFile);
             // check if file exists and if yes: Is it really a file and no directory?
-            if (check_file.exists() && check_file.isFile()) {
+            if (file.exists() && file.isFile()) {
                 return true;
             }
         }
@@ -535,6 +580,57 @@ bool AppManager::isAppInstalled(Transmitter transmitter, QString appName)
     }
 
     return false;
+}
+
+void AppManager::checkAllAppsForUpdate(Transmitter transmitter)
+{
+
+    countDownload_sha1FileCheck = 0;
+
+    foreach (QString appName, applist.keys()) {
+
+        App app = applist.value(appName);
+        app.isInstalled = false;
+        app.updateAvailable = false;
+
+        if(isTransmitterSupportApp(transmitter, appName) && appInformationIsLoaded){
+
+            QStringList sourceList = getAppSourceList(transmitter, app);
+
+            for(int i=0;i<sourceList.size();i++){
+                QUrl url = QUrl::fromEncoded(sourceList[i].toLocal8Bit());
+
+                QString destFile;
+                #ifdef __APPLE__
+                    // OSX path
+                    destFile = transmitter.rootPath + app.destinationPath[i] + "/" + url.fileName();
+                #elif _WIN32
+                    // WIN path
+                    destFile = transmitter.rootPath + app.destinationPath[i].right(app.destinationPath[i].size()-1) + "/" + url.fileName();
+                #endif
+
+                QFile file(destFile);
+                if (file.exists()) {    // check if app installed
+                    app.isInstalled = true;
+                    if (file.open(QFile::ReadOnly)) {
+                        QCryptographicHash hash(QCryptographicHash::Sha1);
+                        if (hash.addData(&file)) {
+                            // download sources and get SHA1 hash
+                            countDownload_sha1FileCheck++;
+                            doDownload(url, appName, sha1FileCheck, hash.result(),false);
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        applist[appName] = app;
+    }
+
+    emit(hasNewAppInformation());
+
 }
 
 AppManager::Transmitter AppManager::getTransmitterDevice(Transmitter transmitter)
@@ -610,6 +706,11 @@ QStringList AppManager::transmitterVolumes()
     }
 
     return volumes;
+}
+
+void AppManager::setCurrentTransmitterIndex(int index)
+{
+    currentTransmitterIndex = index;
 }
 
 QStringList AppManager::getAppSourceList(Transmitter transmitter, App app)
