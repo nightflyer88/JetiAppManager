@@ -9,8 +9,6 @@
 #include "listdelegate.h"
 #include "document.h"
 #include "appinfo.h"
-#include "lua/lua.hpp"
-
 
 #include <QMessageBox>
 #include <QSettings>

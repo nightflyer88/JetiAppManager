@@ -4,7 +4,7 @@
 #endif // DEFAULTS_H
 
 // Version
-#define JETIAPPMANAGER_VERSION          "V0.6 Beta"
+#define JETIAPPMANAGER_VERSION          "V0.6"
 
 
 // Default settings
@@ -32,14 +32,14 @@
     #define FONTSIZE_APP_AUTHOR         10
     #define FONTSIZE_APP_TAG            9
     #define FONTSIZE_APP_INSTALLED      8
-    #define FONTSIZE_APP_UPDATE         10
+    #define FONTSIZE_APP_UPDATE         9
     #define FONTSIZE_APP_NEW            14
 #elif _WIN32
     #define FONTSIZE_APP_DESCRIPTION    14
     #define FONTSIZE_APP_VERSION        9
     #define FONTSIZE_APP_AUTHOR         9
     #define FONTSIZE_APP_TAG            7
-    #define FONTSIZE_APP_INSTALLED      9
-    #define FONTSIZE_APP_UPDATE         10
-    #define FONTSIZE_APP_NEW            14
+    #define FONTSIZE_APP_INSTALLED      7
+    #define FONTSIZE_APP_UPDATE         8
+    #define FONTSIZE_APP_NEW            12
 #endif
