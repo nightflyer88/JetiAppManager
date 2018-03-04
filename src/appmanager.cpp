@@ -389,6 +389,7 @@ void AppManager::downloadFinished(QNetworkReply *reply)
                     appInformationIsLoaded = true;
                     emit(hasNewAppInformation());
                     emit(appInformationIsDownloaded());
+                    emit(hasNewAppStatus());
                 }
 
             }else if(fileType == descriptionfile){
@@ -406,6 +407,7 @@ void AppManager::downloadFinished(QNetworkReply *reply)
                     applist[appName] = app;
 
                     emit(hasNewAppInformation());
+                    emit(hasNewAppStatus());
                 }
 
             }else if(fileType == installSourcefile){
