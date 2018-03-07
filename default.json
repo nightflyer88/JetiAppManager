@@ -18,7 +18,8 @@
   },
   "Rx Battery Monitor": {
     "author": "M. Lehmann",
-    "version": "V1.4",
+    "version": "V1.5",
+    "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/img/Preview.bmp",
     "description": "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/README.md",
     "sourceFile": [
       "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/RxBattMon.lc",
@@ -27,7 +28,10 @@
     "destinationPath": [
       "/Apps",
       "/Apps/RxBattMon"
-    ]
+    ],
+    "de": {                                            
+      "description": "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/README_de.md" 
+    }
   },
   "Artificial Horizon": {
     "author": "JETI model",
