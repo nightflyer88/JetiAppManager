@@ -34,6 +34,42 @@
       "description": "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/README_de.md" 
     }
   },
+  "CB Battery Monitor": {
+    "author": "M. Lehmann",
+    "version": "V1.0",
+    "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_cbBattMon/master/img/Preview.bmp",
+    "description": "https://raw.githubusercontent.com/nightflyer88/Lua_cbBattMon/master/README.md",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/nightflyer88/Lua_cbBattMon/master/cbBattMon.lc",
+      "https://raw.githubusercontent.com/nightflyer88/Lua_cbBattMon/master/cbBattMon/cbBattMon.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/cbBattMon"
+    ],
+    "de": {                                            
+      "description": "https://raw.githubusercontent.com/nightflyer88/Lua_cbBattMon/master/README_de.md" 
+    }
+  },
+  "Flight program": {
+    "author": "M. Lehmann",
+    "version": "V1.0",
+    "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_Flight_program/master/img/Preview.png",
+    "description": "https://raw.githubusercontent.com/nightflyer88/Lua_Flight_program/master/README.md",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/nightflyer88/Lua_Flight_program/master/flightProg.lc",
+      "https://raw.githubusercontent.com/nightflyer88/Lua_Flight_program/master/flightProg/flightProg.jsn",
+      "https://raw.githubusercontent.com/nightflyer88/Lua_Flight_program/master/flightProg/Prog/Prog1.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/flightProg",
+      "/Apps/flightProg/Prog"
+    ],
+    "de": {                                            
+      "description": "https://raw.githubusercontent.com/nightflyer88/Lua_Flight_program/master/README_de.md" 
+    }
+  },
   "Artificial Horizon": {
     "author": "JETI model",
     "version": "V1.0",
