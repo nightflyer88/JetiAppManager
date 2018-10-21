@@ -19,7 +19,7 @@
   },
   "Rx Battery Monitor": {
     "author": "M. Lehmann",
-    "version": "V1.5",
+    "version": "V1.6",
     "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/img/Preview.bmp",
     "description": "https://raw.githubusercontent.com/nightflyer88/Lua_RxBattMon/master/README.md",
     "sourceFile": [
@@ -36,7 +36,7 @@
   },
   "CB Battery Monitor": {
     "author": "M. Lehmann",
-    "version": "V1.0",
+    "version": "V1.1",
     "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_cbBattMon/master/img/Preview.bmp",
     "description": "https://raw.githubusercontent.com/nightflyer88/Lua_cbBattMon/master/README.md",
     "sourceFile": [
@@ -68,6 +68,23 @@
     ],
     "de": {                                            
       "description": "https://raw.githubusercontent.com/nightflyer88/Lua_Flight_program/master/README_de.md" 
+    }
+  },
+  "Blinky Controller": {
+    "author": "M. Lehmann",
+    "version": "V1.0",
+    "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_Blinky_controll/master/img/Preview.png",
+    "description": "https://raw.githubusercontent.com/nightflyer88/Lua_Blinky_controll/master/README.md",
+    "sourceFile": [
+      "https://raw.githubusercontent.com/nightflyer88/Lua_Blinky_controll/master/Blinky.lc",
+      "https://raw.githubusercontent.com/nightflyer88/Lua_Blinky_controll/master/Blinky/Blinky.jsn"
+    ],
+    "destinationPath": [
+      "/Apps",
+      "/Apps/Blinky"
+    ],
+    "de": {                                            
+      "description": "https://raw.githubusercontent.com/nightflyer88/Lua_Blinky_controll/master/README_de.md" 
     }
   },
   "Artificial Horizon": {
