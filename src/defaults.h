@@ -4,7 +4,7 @@
 #endif // DEFAULTS_H
 
 // Version
-#define JETIAPPMANAGER_VERSION          "V0.6"
+#define JETIAPPMANAGER_VERSION          "V0.7 beta"
 
 
 // Default settings
