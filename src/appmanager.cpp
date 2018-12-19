@@ -80,8 +80,8 @@ bool AppManager::uninstallApp(Transmitter transmitter, QString appName)
 
             QString destPath;
             QString appFolderPath = TRANSMITTER_APPFOLDER;
-            #ifdef __APPLE__
-                // OSX path
+            #if defined(__APPLE__) || defined(__linux__)
+                // generic path
                 destPath = transmitter.rootPath + app.destinationPath[i];
                 appFolderPath = transmitter.rootPath + appFolderPath;
             #elif _WIN32
@@ -158,8 +158,8 @@ bool AppManager::isHttpRedirect(QNetworkReply *reply)
 bool AppManager::isTransmitterValid(QString rootpath)
 {
     QString destFile = TRANSMITTER_CONFIGFILE;
-    #ifdef __APPLE__
-        // OSX path
+    #if defined(__APPLE__) || defined(__linux__)
+        // generic path
         destFile = rootpath + destFile;
     #elif _WIN32
         // WIN path
@@ -178,8 +178,8 @@ bool AppManager::isTransmitterValid(QString rootpath)
 bool AppManager::isTransmitterSupportLua(QString rootpath)
 {
     QString destPath = TRANSMITTER_APPFOLDER;
-    #ifdef __APPLE__
-        // OSX path
+    #if defined(__APPLE__) || defined(__linux__)
+        // generic path
         destPath = rootpath + destPath;
     #elif _WIN32
         // WIN path
@@ -408,6 +408,7 @@ void AppManager::downloadFinished(QNetworkReply *reply)
 
                     emit(hasNewAppInformation());
                     emit(hasNewAppStatus());
+
                 }
 
             }else if(fileType == installSourcefile){
@@ -423,8 +424,8 @@ void AppManager::downloadFinished(QNetworkReply *reply)
 
                         if(sourceFileUrl == url && !transmitterList.isEmpty()){
                             QString destPath;
-                            #ifdef __APPLE__
-                                // OSX path
+                            #if defined(__APPLE__) || defined(__linux__)
+                                // generic path
                                 destPath = transmitterList[currentTransmitterIndex].rootPath + app.destinationPath[i] + "/";
                             #elif _WIN32
                                 // WIN path
@@ -564,8 +565,8 @@ bool AppManager::isAppInstalled(Transmitter transmitter, QString appName)
             QUrl url = QUrl::fromEncoded(sourceList[i].toLocal8Bit());
 
             QString destFile;
-            #ifdef __APPLE__
-                // OSX path
+            #if defined(__APPLE__) || defined(__linux__)
+                // generic path
                 destFile = transmitter.rootPath + app.destinationPath[i] + "/" + url.fileName();
             #elif _WIN32
                 // WIN path
@@ -603,8 +604,10 @@ void AppManager::checkAllAppsForUpdate(Transmitter transmitter)
                 QUrl url = QUrl::fromEncoded(sourceList[i].toLocal8Bit());
 
                 QString destFile;
-                #ifdef __APPLE__
-                    // OSX path
+                #if defined(__APPLE__) || defined(__linux__)
+                    // generic path
+                    destFile = transmitter.rootPath + app.destinationPath[i] + "/" + url.fileName();
+                #elif __linux__
                     destFile = transmitter.rootPath + app.destinationPath[i] + "/" + url.fileName();
                 #elif _WIN32
                     // WIN path

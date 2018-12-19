@@ -5,6 +5,10 @@ int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    // this is necessary for support of deserialization of the preference data for linux
+    // if this is missing an error message is given and no URLs are loaded:
+    // > QVariant::load: unknown user type with name QList<QString>
+    qRegisterMetaTypeStreamOperators<QList<QString>>("Data");
     QApplication a(argc, argv);
 
     a.setOrganizationName("Nightflyer88");
