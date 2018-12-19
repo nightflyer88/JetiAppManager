@@ -4,7 +4,7 @@
 #endif // DEFAULTS_H
 
 // Version
-#define JETIAPPMANAGER_VERSION          "V0.7 beta"
+#define JETIAPPMANAGER_VERSION          "V0.6"
 
 
 // Default settings
@@ -26,7 +26,7 @@
 
 
 // Font sizes
-#ifdef __APPLE__
+#if defined(__APPLE__) || defined(__linux__)
     #define FONTSIZE_APP_DESCRIPTION    16
     #define FONTSIZE_APP_VERSION        10
     #define FONTSIZE_APP_AUTHOR         10

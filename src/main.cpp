@@ -5,6 +5,7 @@ int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    qRegisterMetaTypeStreamOperators<QList<QString>>("Data");
     QApplication a(argc, argv);
 
     a.setOrganizationName("Nightflyer88");
