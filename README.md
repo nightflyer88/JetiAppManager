@@ -1,5 +1,7 @@
 # Jeti App Manager
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R69PMKTCXQBUU&source=url)
+
 The Jeti App Manager will list all online available LUA apps, and then you can
 easy and fast to be installed on the Jeti DC/DS transmitter. Simply and conveniently select the app, in the upper left select the SD card of the transmitter,
 and press on install - Done!
