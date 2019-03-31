@@ -36,7 +36,7 @@
   },
   "CB Battery Monitor": {
     "author": "M. Lehmann",
-    "version": "V1.1",
+    "version": "V1.1.1",
     "previewImg": "https://raw.githubusercontent.com/nightflyer88/Lua_cbBattMon/master/img/Preview.bmp",
     "description": "https://raw.githubusercontent.com/nightflyer88/Lua_cbBattMon/master/README.md",
     "sourceFile": [
